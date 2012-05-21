@@ -1,0 +1,7 @@
+>!> Installing B from channel test
+>!> Installing C from channel test
+>!> Solution #1:
+>!> remove  A-2.0.5-1.noarch
+>!> install B-2.0-1.noarch[test]
+>!> install C-2.0-1.noarch[test]
+>!> installs=2, upgrades=0, uninstalls=1

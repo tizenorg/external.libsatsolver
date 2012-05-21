@@ -1,0 +1,889 @@
+#!/usr/bin/ruby
+
+require 'solv'
+require 'rubygems'
+require 'inifile'
+require 'tempfile'
+
+class Repo_generic
+  def initialize(name, type, attribs = {})
+    @name = name
+    @type = type
+    @attribs = attribs.dup
+    @incomplete = false
+  end
+
+  def enabled?
+    return @attribs['enabled'].to_i != 0
+  end
+
+  def autorefresh?
+    return @attribs['autorefresh'].to_i != 0
+  end
+
+  def calc_cookie_fp(f)
+    chksum = Solv::Chksum.new(Solv::REPOKEY_TYPE_SHA256)
+    chksum.add_fp(f)
+    return chksum.raw
+  end
+
+  def calc_cookie_file(filename)
+    chksum = Solv::Chksum.new(Solv::REPOKEY_TYPE_SHA256)
+    chksum.add("1.1")
+    chksum.add_stat(filename)
+    return chksum.raw
+  end
+
+  def cachepath(ext = nil)
+    path = @name.sub(/^\./, '_')
+    path += ext ? "_#{ext}.solvx" : '.solv'
+    return '/var/cache/solv/' + path.gsub(/\//, '_')
+  end
+
+  def load(pool)
+    @handle = pool.add_repo(@name)
+    @handle.appdata = self
+    @handle.priority = 99 - @attribs['priority'].to_i if @attribs['priority']
+    dorefresh = autorefresh?
+    if dorefresh
+      begin
+        s = File.stat(cachepath)
+        dorefresh = false if s && Time.now - s.mtime < @attribs['metadata_expire'].to_i
+      rescue SystemCallError
+      end
+    end
+    @cookie = nil
+    if !dorefresh && usecachedrepo(nil)
+      puts "repo: '#{@name}' cached"
+      return true
+    end
+    return load_if_changed()
+  end
+
+  def load_ext(repodata)
+    return false
+  end
+
+  def load_if_changed
+    return false
+  end
+
+  def download(file, uncompress, chksum, markincomplete = false)
+    url = @attribs['baseurl']
+    if !url
+      puts "%{@name}: no baseurl"
+      return nil
+    end
+    url = url.sub(/\/$/, '') + "/#{file}"
+    f =  Tempfile.new('rbsolv')
+    f.unlink
+    st = system('curl', '-f', '-s', '-L', '-o', "/dev/fd/" + f.fileno.to_s, '--', url)
+    return nil if f.stat.size == 0 && (st || !chksum)
+    if !st
+	puts "#{file}: download error #{$? >> 8}"
+        @incomplete = true if markincomplete
+        return nil
+    end
+    if chksum
+      fchksum = Solv::Chksum.new(chksum.type)
+      fchksum.add_fd(f.fileno)
+      if !fchksum.matches(chksum)
+	puts "#{file}: checksum error"
+        @incomplete = true if markincomplete
+        return nil
+      end
+    end
+    if uncompress
+      return Solv::xfopen_dup(file, f.fileno)
+    else
+      return Solv::xfopen_dup('', f.fileno)
+    end
+  end
+
+  def download_location(location, chksum)
+    f = download(location, false, chksum)
+    abort("\n#{@name}: #{location} not found in repository\n") unless f
+    return f
+  end
+
+  def usecachedrepo(ext, mark = false)
+    cookie = ext ? @extcookie : @cookie
+    begin
+      repopath = cachepath(ext)
+      f = File.new(repopath, "r")
+      f.sysseek(-32, IO::SEEK_END)
+      fcookie = f.sysread(32)
+      return false if fcookie.length != 32
+      return false if cookie && fcookie != cookie
+      if !ext && @type != 'system'
+        f.sysseek(-32 * 2, IO::SEEK_END)
+        fextcookie = f.sysread(32)
+        return false if fextcookie.length != 32
+      end
+      f.sysseek(0, IO::SEEK_SET)
+      f = Solv::xfopen_dup('', f.fileno)
+      flags = ext ? Solv::Repo::REPO_USE_LOADING|Solv::Repo::REPO_EXTEND_SOLVABLES : 0
+      flags |= Solv::Repo::REPO_LOCALPOOL if ext && ext != 'DL'
+      if ! @handle.add_solv(f, flags)
+        Solv::xfclose(f)
+        return false
+      end
+      Solv::xfclose(f)
+      @cookie = fcookie unless ext
+      @extcookie = fextcookie if !ext && @type != 'system'
+      now = Time.now
+      begin
+        File::utime(now, now, repopath) if mark
+      rescue SystemCallError
+      end
+      return true
+    rescue SystemCallError
+      return false
+    end
+    return true
+  end
+
+  def genextcookie(f)
+    chksum = Solv::Chksum.new(Solv::REPOKEY_TYPE_SHA256)
+    chksum.add(@cookie)
+    if f
+      s = f.stat()
+      chksum.add(s.dev.to_s)
+      chksum.add(s.ino.to_s)
+      chksum.add(s.size.to_s)
+      chksum.add(s.mtime.to_s)
+    end
+    @extcookie = chksum.raw()
+    @extcookie[0] = 1 if @extcookie[0] == 0
+  end
+
+  def writecachedrepo(ext, info = nil)
+    begin
+      Dir::mkdir("/var/cache/solv", 0755) unless FileTest.directory?("/var/cache/solv")
+      f =  Tempfile.new('.newsolv-', '/var/cache/solv')
+      f.chmod(0444)
+      sf = Solv::xfopen_dup('', f.fileno)
+      if !info
+	@handle.write(sf)
+      elsif ext
+	info.write(sf)
+      else
+	@handle.write_first_repodata(sf)
+      end
+      Solv::xfclose(sf)
+      f.sysseek(0, IO::SEEK_END)
+      if @type != 'system' && !ext
+        genextcookie(f) unless @extcookie
+        f.syswrite(@extcookie)
+      end
+      f.syswrite(ext ? @extcookie : @cookie)
+      f.close(false)
+      if @handle.iscontiguous?
+	sf = Solv::xfopen(f.path)
+	if sf
+	  if !ext
+	    @handle.empty()
+	    abort("internal error, cannot reload solv file") unless @handle.add_solv(sf, Solv::Repo::SOLV_ADD_NO_STUBS)
+	  else
+	    info.extend_to_repo()
+	    info.add_solv(sf, Solv::Repo::REPO_EXTEND_SOLVABLES)
+	  end
+	  Solv::xfclose(sf)
+	end
+      end
+      File.rename(f.path, cachepath(ext))
+      f.unlink
+      return true
+    rescue SystemCallError
+      return false
+    end
+  end
+
+  def updateaddedprovides(addedprovides)
+    return if @incomplete
+    return unless @handle && !@handle.isempty?
+    repodata = @handle.first_repodata()
+    return unless repodata
+    oldaddedprovides = repodata.lookup_idarray(Solv::SOLVID_META, Solv::REPOSITORY_ADDEDFILEPROVIDES)
+    return if (oldaddedprovides | addedprovides) == oldaddedprovides
+    for id in addedprovides
+      repodata.add_idarray(Solv::SOLVID_META, Solv::REPOSITORY_ADDEDFILEPROVIDES, id)
+    end
+    repodata.internalize()
+    writecachedrepo(nil, repodata)
+  end
+end
+
+class Repo_rpmmd < Repo_generic
+
+  def find(what)
+    di = @handle.Dataiterator(Solv::SOLVID_META, Solv::REPOSITORY_REPOMD_TYPE, what, Solv::Dataiterator::SEARCH_STRING)
+    di.prepend_keyname(Solv::REPOSITORY_REPOMD)
+    for d in di
+      d.setpos_parent()
+      filename = d.pool.lookup_str(Solv::SOLVID_POS, Solv::REPOSITORY_REPOMD_LOCATION)
+      next unless filename
+      checksum = d.pool.lookup_checksum(Solv::SOLVID_POS, Solv::REPOSITORY_REPOMD_CHECKSUM)
+      if !checksum
+	puts "no #{filename} checksum!"
+	return nil, nil
+      end
+      return filename, checksum
+    end
+    return nil, nil
+  end
+
+  def load_if_changed
+    print "rpmmd repo '#{@name}: "
+    f = download("repodata/repomd.xml", false, nil, nil)
+    if !f
+      puts "no repomd.xml file, skipped"
+      @handle.free(true)
+      @handle = nil
+      return false
+    end
+    @cookie = calc_cookie_fp(f)
+    if usecachedrepo(nil, true)
+      puts "cached"
+      Solv.xfclose(f)
+      return true
+    end
+    @handle.add_repomdxml(f, 0)
+    Solv::xfclose(f)
+    puts "fetching"
+    filename, filechksum = find('primary')
+    if filename
+      f = download(filename, true, filechksum, true)
+      if f
+        @handle.add_rpmmd(f, nil, 0)
+        Solv::xfclose(f)
+      end
+      return false if @incomplete
+    end
+    filename, filechksum = find('updateinfo')
+    if filename
+      f = download(filename, true, filechksum, true)
+      if f
+        @handle.add_updateinfoxml(f, 0)
+        Solv::xfclose(f)
+      end
+    end
+    add_exts()
+    writecachedrepo(nil) unless @incomplete
+    @handle.create_stubs()
+    return true
+  end
+
+  def add_ext(repodata, what, ext)
+    filename, filechksum = find(what)
+    filename, filechksum = find('prestodelta') if !filename && what == 'deltainfo'
+    return unless filename
+    h = repodata.new_handle()
+    repodata.set_poolstr(h, Solv::REPOSITORY_REPOMD_TYPE, what)
+    repodata.set_str(h, Solv::REPOSITORY_REPOMD_LOCATION, filename)
+    repodata.set_checksum(h, Solv::REPOSITORY_REPOMD_CHECKSUM, filechksum)
+    if ext == 'DL'
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::REPOSITORY_DELTAINFO)
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::REPOKEY_TYPE_FLEXARRAY)
+    elsif ext == 'FL'
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::SOLVABLE_FILELIST)
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::REPOKEY_TYPE_DIRSTRARRAY)
+    end
+    repodata.add_flexarray(Solv::SOLVID_META, Solv::REPOSITORY_EXTERNAL, h)
+  end
+
+  def add_exts
+    repodata = @handle.add_repodata(0)
+    add_ext(repodata, 'deltainfo', 'DL')
+    add_ext(repodata, 'filelists', 'FL')
+    repodata.internalize()
+  end
+
+  def load_ext(repodata)
+    repomdtype = repodata.lookup_str(Solv::SOLVID_META, Solv::REPOSITORY_REPOMD_TYPE)
+    if repomdtype == 'filelists'
+      ext = 'FL'
+    elsif repomdtype == 'deltainfo'
+      ext = 'DL'
+    else
+      return false
+    end
+    print "[#{@name}:#{ext}: "
+    STDOUT.flush
+    if usecachedrepo(ext)
+      puts "cached]\n"
+      return true
+    end
+    puts "fetching]\n"
+    filename = repodata.lookup_str(Solv::SOLVID_META, Solv::REPOSITORY_REPOMD_LOCATION)
+    filechksum = repodata.lookup_checksum(Solv::SOLVID_META, Solv::REPOSITORY_REPOMD_CHECKSUM)
+    f = download(filename, true, filechksum)
+    return false unless f
+    if ext == 'FL'
+      @handle.add_rpmmd(f, 'FL', Solv::Repo::REPO_USE_LOADING|Solv::Repo::REPO_EXTEND_SOLVABLES)
+    elsif ext == 'DL'
+      @handle.add_deltainfoxml(f, Solv::Repo::REPO_USE_LOADING)
+    end
+    Solv::xfclose(f)
+    writecachedrepo(ext, repodata)
+    return true
+  end
+
+end
+
+class Repo_susetags < Repo_generic
+
+  def find(what)
+    di = @handle.Dataiterator(Solv::SOLVID_META, Solv::SUSETAGS_FILE_NAME, what, Solv::Dataiterator::SEARCH_STRING)
+    di.prepend_keyname(Solv::SUSETAGS_FILE)
+    for d in di
+      d.setpos_parent()
+      checksum = d.pool.lookup_checksum(Solv::SOLVID_POS, Solv::SUSETAGS_FILE_CHECKSUM)
+      return what, checksum
+    end
+    return nil, nil
+  end
+
+  def load_if_changed
+    print "susetags repo '#{@name}: "
+    f = download("content", false, nil, nil)
+    if !f
+      puts "no content file, skipped"
+      @handle.free(true)
+      @handle = nil
+      return false
+    end
+    @cookie = calc_cookie_fp(f)
+    if usecachedrepo(nil, true)
+      puts "cached"
+      Solv.xfclose(f)
+      return true
+    end
+    @handle.add_content(f, 0)
+    Solv::xfclose(f)
+    puts "fetching"
+    defvendorid = @handle.lookup_id(Solv::SOLVID_META, Solv::SUSETAGS_DEFAULTVENDOR)
+    descrdir = @handle.lookup_str(Solv::SOLVID_META, Solv::SUSETAGS_DESCRDIR)
+    descrdir = "suse/setup/descr" unless descrdir
+    (filename, filechksum) = find('packages.gz')
+    (filename, filechksum) = find('packages') unless filename
+    if filename
+      f = download("#{descrdir}/#{filename}", true, filechksum, true)
+      if f
+        @handle.add_susetags(f, defvendorid, nil, Solv::Repo::REPO_NO_INTERNALIZE|Solv::Repo::SUSETAGS_RECORD_SHARES)
+        Solv::xfclose(f)
+	(filename, filechksum) = find('packages.en.gz')
+	(filename, filechksum) = find('packages.en') unless filename
+        if filename
+          f = download("#{descrdir}/#{filename}", true, filechksum, true)
+          if f
+            @handle.add_susetags(f, defvendorid, nil, Solv::Repo::REPO_NO_INTERNALIZE|Solv::Repo::REPO_REUSE_REPODATA|Solv::Repo::REPO_EXTEND_SOLVABLES)
+            Solv::xfclose(f)
+          end
+        end
+	@handle.internalize()
+      end
+    end
+    add_exts()
+    writecachedrepo(nil) unless @incomplete
+    @handle.create_stubs()
+    return true
+  end
+
+  @@langtags = {
+    Solv::SOLVABLE_SUMMARY     => Solv::REPOKEY_TYPE_STR,
+    Solv::SOLVABLE_DESCRIPTION => Solv::REPOKEY_TYPE_STR,
+    Solv::SOLVABLE_EULA        => Solv::REPOKEY_TYPE_STR,
+    Solv::SOLVABLE_MESSAGEINS  => Solv::REPOKEY_TYPE_STR,
+    Solv::SOLVABLE_MESSAGEDEL  => Solv::REPOKEY_TYPE_STR,
+    Solv::SOLVABLE_CATEGORY    => Solv::REPOKEY_TYPE_ID,
+  }
+
+  def add_ext(repodata, what, ext)
+    (filename, filechksum) = find(what)
+    h = repodata.new_handle()
+    repodata.set_str(h, Solv::SUSETAGS_FILE_NAME, filename)
+    repodata.set_checksum(h, Solv::SUSETAGS_FILE_CHECKSUM, filechksum)
+    if ext == 'DL'
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::REPOSITORY_DELTAINFO)
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::REPOKEY_TYPE_FLEXARRAY)
+    elsif ext == 'DU'
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::SOLVABLE_DISKUSAGE)
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::REPOKEY_TYPE_DIRNUMNUMARRAY)
+    elsif ext == 'FL'
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::SOLVABLE_FILELIST)
+      repodata.add_idarray(h, Solv::REPOSITORY_KEYS, Solv::REPOKEY_TYPE_DIRSTRARRAY)
+    else
+      @@langtags.sort.each do |langid, langtype|
+        repodata.add_idarray(h, Solv::REPOSITORY_KEYS, @handle.pool.id2langid(langid, ext, true))
+        repodata.add_idarray(h, Solv::REPOSITORY_KEYS, langtype)
+      end
+    end
+    repodata.add_flexarray(Solv::SOLVID_META, Solv::REPOSITORY_EXTERNAL, h)
+  end
+
+  def add_exts
+    repodata = @handle.add_repodata(0)
+    di = @handle.Dataiterator(Solv::SOLVID_META, Solv::SUSETAGS_FILE_NAME, nil, 0)
+    di.prepend_keyname(Solv::SUSETAGS_FILE)
+    for d in di
+      filename = d.str
+      next unless filename && filename =~ /^packages\.(..)(?:\..*)$/
+      next if $1 == 'en' || $1 == 'gz'
+      add_ext(repodata, filename, $1)
+    end
+    repodata.internalize()
+  end
+
+  def load_ext(repodata)
+    filename = repodata.lookup_str(Solv::SOLVID_META, Solv::SUSETAGS_FILE_NAME)
+    ext = filename[9,2]
+    print "[#{@name}:#{ext}: "
+    STDOUT.flush
+    if usecachedrepo(ext)
+      puts "cached]\n"
+      return true
+    end
+    puts "fetching]\n"
+    defvendorid = @handle.lookup_id(Solv::SOLVID_META, Solv::SUSETAGS_DEFAULTVENDOR)
+    descrdir = @handle.lookup_str(Solv::SOLVID_META, Solv::SUSETAGS_DESCRDIR)
+    descrdir = "suse/setup/descr" unless descrdir
+    filechksum = repodata.lookup_checksum(Solv::SOLVID_META, Solv::SUSETAGS_FILE_CHECKSUM)
+    f = download("#{descrdir}/#{filename}", true, filechksum)
+    return false unless f
+    @handle.add_susetags(f, defvendorid, ext, Solv::Repo::REPO_USE_LOADING|Solv::Repo::REPO_EXTEND_SOLVABLES)
+    Solv::xfclose(f)
+    writecachedrepo(ext, repodata)
+    return true
+  end
+
+  def download_location(location, chksum)
+    datadir = @handle.lookup_str(Solv::SOLVID_META, Solv::SUSETAGS_DATADIR)
+    datadir = "suse" unless datadir
+    super("#{datadir}/#{location}", chksum)
+  end
+
+end
+
+class Repo_unknown < Repo_generic
+  def load(pool)
+    puts "unsupported repo '#{@name}: skipped"
+    return false
+  end
+end
+
+class Repo_system < Repo_generic
+  def load(pool)
+    @handle = pool.add_repo(@name)
+    @handle.appdata = self
+    pool.installed = @handle
+    print "rpm database: "
+    @cookie = calc_cookie_file("/var/lib/rpm/Packages")
+    if usecachedrepo(nil)
+      puts "cached"
+      return true
+    end
+    puts "reading"
+    @handle.add_products("/etc/products.d", Solv::Repo::REPO_NO_INTERNALIZE)
+    @handle.add_rpmdb(nil, Solv::Repo::REPO_REUSE_REPODATA)
+    writecachedrepo(nil)
+    return true
+  end
+end
+
+
+def validarch?(pool, arch)
+  return false unless arch && arch != ''
+  id = pool.str2id(arch, false)
+  return id != 0 && pool.isknownarch?(id)
+end
+
+def depglob(pool, name, globname, globdep)
+  id = pool.str2id(name, false)
+  if id != 0
+    match = false
+    providers = pool.whatprovides(id)
+    if globname && providers.find {|s| s.nameid == id }
+      return [ pool.Job(Solv::Job::SOLVER_SOLVABLE_NAME, id) ]
+    end
+    if !providers.empty?
+      puts "[using capability match for '#{name}']" if globname && globdep
+      return [ pool.Job(Solv::Job::SOLVER_SOLVABLE_PROVIDES, id) ]
+    end
+  end
+  return [] unless name =~ /[\[*?]/
+  if globname
+    idmatches = {}
+    for d in pool.Dataiterator(0, Solv::SOLVABLE_NAME, name, Solv::Dataiterator::SEARCH_GLOB)
+      s = d.solvable
+      idmatches[s.nameid] = 1 if s.installable?
+    end
+    if !idmatches.empty?
+      return idmatches.keys.sort.collect { |id| pool.Job(Solv::Job::SOLVER_SOLVABLE_NAME, id) }
+    end
+  end
+  if globdep
+    idmatches = pool.matchprovidingids(name, Solv::Dataiterator::SEARCH_GLOB)
+    if !idmatches.empty?
+      puts "[using capability match for '#{name}']"
+      return idmatches.sort.collect { |id| pool.Job(Solv::Job::SOLVER_SOLVABLE_PROVIDES, id) }
+    end
+  end
+  return []
+end
+
+def limitjobs(pool, jobs, flags, evrstr)
+  njobs = []
+  evr = pool.str2id(evrstr)
+  for j in jobs
+    how = j.how
+    sel = how & Solv::Job::SOLVER_SELECTMASK
+    what = pool.rel2id(j.what, evr, flags)
+    if flags == Solv::REL_ARCH
+      how |= Solv::Job::SOLVER_SETARCH
+    elsif flags == Solv::REL_EQ && sel == Solv::Job::SOLVER_SOLVABLE_NAME
+      how |= evrstr.include?(?-) ? Solv::Job::SOLVER_SETEVR : Solv::Job::SOLVER_SETEV
+    end
+    njobs << pool.Job(how, what)
+  end
+  return njobs
+end
+
+def limitjobs_evrarch(pool, jobs, flags, evrstr)
+  if evrstr =~ /^(.+)\.(.+?)$/ && validarch?(pool, $2)
+    evrstr = $1
+    jobs = limitjobs(pool, jobs, Solv::REL_ARCH, $2)
+  end
+  return limitjobs(pool, jobs, flags, evrstr)
+end
+
+def mkjobs_rel(pool, cmd, name, rel, evr)
+  flags = 0
+  flags |= Solv::REL_LT if rel.include?(?<)
+  flags |= Solv::REL_EQ if rel.include?(?=)
+  flags |= Solv::REL_GT if rel.include?(?>)
+  jobs = depglob(pool, name, true, true)
+  return limitjobs(pool, jobs, flags, evr) unless jobs.empty?
+  if (name =~ /^(.+)\.(.+?)$/) && validarch?(pool, $2)
+    arch = $2
+    jobs = depglob(pool, name, true, true)
+    return [] if jobs.empty?
+    jobs = limitjobs(pool, jobs, Solv::REL_ARCH, arch)
+    return limitjobs(pool, jobs, flags, evr)
+  end
+  return []
+end
+
+def mkjobs_nevra(pool, cmd, arg)
+  jobs = depglob(pool, arg, true, true)
+  return jobs unless jobs.empty?
+  if ((arg =~ /^(.+)\.(.+?)$/) && validarch?(pool, $2))
+    arch = $2
+    jobs = depglob(pool, $1, true, true)
+    return limitjobs(pool, jobs, Solv::REL_ARCH, arch) unless jobs.empty?
+  end
+  if (arg =~ /^(.+)-(.+?)$/)
+    evr = $2
+    jobs = depglob(pool, $1, true, false)
+    return limitjobs_evrarch(pool, jobs, Solv::REL_EQ, evr) unless jobs.empty?
+  end
+  if (arg =~ /^(.+)-(.+?-.+?)$/)
+    evr = $2
+    jobs = depglob(pool, $1, true, false)
+    return limitjobs_evrarch(pool, jobs, Solv::REL_EQ, evr) unless jobs.empty?
+  end
+  return []
+end
+
+def mkjobs_filelist(pool, cmd, arg)
+  type = Solv::Dataiterator::SEARCH_STRING
+  type = Solv::Dataiterator::SEARCH_GLOB if arg =~ /[\[*?]/
+  if cmd == 'erase'
+    di = pool.installed.Dataiterator(0, Solv::SOLVABLE_FILELIST, arg, type | Solv::Dataiterator::SEARCH_FILES|Solv::Dataiterator::SEARCH_COMPLETE_FILELIST)
+  else
+    di = pool.Dataiterator(0, Solv::SOLVABLE_FILELIST, arg, type | Solv::Dataiterator::SEARCH_FILES|Solv::Dataiterator::SEARCH_COMPLETE_FILELIST)
+  end
+  matches = []
+  for d in di
+    s = d.solvable
+    next unless s && s.installable?
+    matches.push(s.id)
+    di.skip_solvable()
+  end
+  return [] if matches.empty?
+  puts "[using file list match for '#{arg}']"
+  if matches.length > 1
+    return [ pool.Job(Solv::Job::SOLVER_SOLVABLE_ONE_OF, pool.towhatprovides(matches)) ]
+  else
+    return [ pool.Job(Solv::Job::SOLVER_SOLVABLE | Solv::Job::SOLVER_NOAUTOSET, matches[0]) ]
+  end
+end
+
+def mkjobs(pool, cmd, arg)
+  if arg =~ /^\//
+    jobs = mkjobs_filelist(pool, cmd, arg)
+    return jobs unless jobs.empty?
+  end
+  if (arg =~ /^(.+?)\s*([<=>]+)\s*(.+?)$/)
+    return mkjobs_rel(pool, cmd, $1, $2, $3)
+  else
+    return mkjobs_nevra(pool, cmd, arg)
+  end
+end
+
+args = ARGV
+cmd = args.shift
+cmd = 'list' if cmd == 'li'
+cmd = 'install' if cmd == 'in'
+cmd = 'erase' if cmd == 'rm'
+cmd = 'verify' if cmd == 've'
+cmd = 'search' if cmd == 'se'
+
+repos = []
+for reposdir in [ '/etc/zypp/repos.d' ] do
+  next unless FileTest.directory?(reposdir)
+  for reponame in Dir["#{reposdir}/*.repo"].sort do
+    cfg = IniFile.new(reponame)
+    cfg.each_section do |ali|
+      repoattr = { 'alias' => ali, 'enabled' => 0, 'priority' => 99, 'autorefresh' => 1, 'type' => 'rpm-md', 'metadata_expire' => 900}
+      repoattr.update(cfg[ali])
+      if repoattr['type'] == 'rpm-md'
+        repo = Repo_rpmmd.new(ali, 'repomd', repoattr)
+      elsif repoattr['type'] == 'yast2'
+        repo = Repo_susetags.new(ali, 'susetags', repoattr)
+      else
+        repo = Repo_unknown.new(ali, 'unknown', repoattr)
+      end
+      repos.push(repo)
+    end
+  end
+end
+
+pool = Solv::Pool.new()
+# require 'sys/uname' ; sysarch = Sys::Uname.machine
+sysarch = `uname -p`.strip
+pool.setarch(sysarch)
+
+pool.set_loadcallback { |repodata|
+  repo = repodata.repo.appdata
+  repo ? repo.load_ext(repodata) : false
+}
+
+sysrepo = Repo_system.new('@System', 'system')
+sysrepo.load(pool)
+for repo in repos
+  repo.load(pool) if repo.enabled?
+end
+
+if cmd == 'search'
+  matches = {}
+  for di in pool.Dataiterator(0, Solv::SOLVABLE_NAME, args[0], Solv::Dataiterator::SEARCH_SUBSTRING | Solv::Dataiterator::SEARCH_NOCASE)
+    matches[di.solvid] = true
+  end
+  for solvid in matches.keys.sort
+    s = pool.solvables[solvid]
+    puts "- #{s.str} [#{s.repo.name}]"
+  end
+  exit
+end
+
+addedprovides = pool.addfileprovides_ids()
+if !addedprovides.empty?
+  sysrepo.updateaddedprovides(addedprovides)
+  for repo in repos
+    repo.updateaddedprovides(addedprovides)
+  end
+end
+pool.createwhatprovides()
+
+jobs = []
+for arg in args
+  njobs = mkjobs(pool, cmd, ARGV[0])
+  abort("nothing matches '#{arg}'") if njobs.empty?
+  jobs += njobs
+end
+
+if cmd == 'list' || cmd == 'info'
+  abort("no package matched.") if jobs.empty?
+    for job in jobs
+      for s in job.solvables()
+        if cmd == 'info'
+	  puts "Name:        #{s.str}"
+          puts "Repo:        #{s.repo.name}"
+          puts "Summary:     #{s.lookup_str(Solv::SOLVABLE_SUMMARY)}"
+          str = s.lookup_str(Solv::SOLVABLE_URL)
+          puts "Url:         #{str}" if str
+          str = s.lookup_str(Solv::SOLVABLE_LICENSE)
+          puts "License:     #{str}" if str
+          puts "Description:\n#{s.lookup_str(Solv::SOLVABLE_DESCRIPTION)}"
+          puts
+        else
+	  puts "  - #{s.str} [#{s.repo.name}]"
+	  puts "    #{s.lookup_str(Solv::SOLVABLE_SUMMARY)}"
+        end
+      end
+    end
+  exit
+end
+
+if cmd == 'install' || cmd == 'erase' || cmd == 'up' || cmd == 'dup' || cmd == 'verify'
+  if jobs.empty?
+    if cmd == 'up' || cmd == 'verify'
+      jobs = [ pool.Job(Solv::Job::SOLVER_SOLVABLE_ALL, 0) ]
+    elsif cmd != 'dup'
+      abort("no package matched.")
+    end
+  end
+  for job in jobs
+    if cmd == 'up'
+      if job.how == Solv::Job::SOLVER_SOLVABLE_ALL || job.solvables.any? {|s| s.isinstalled?}
+        job.how |= Solv::Job::SOLVER_UPDATE
+      else
+        job.how |= Solv::Job::SOLVER_INSTALL
+      end
+    elsif cmd == 'install'
+      job.how |= Solv::Job::SOLVER_INSTALL
+    elsif cmd == 'erase'
+      job.how |= Solv::Job::SOLVER_ERASE
+    elsif cmd == 'dup'
+      job.how |= Solv::Job::SOLVER_DISTUPGRADE
+    elsif cmd == 'verify'
+      job.how |= Solv::Job::SOLVER_VERIFY
+    end
+  end
+
+  solver = nil
+  #pool.set_debuglevel(1)
+  while true
+    solver = pool.Solver
+    solver.ignorealreadyrecommended = true
+    solver.allowuninstall = true if cmd == 'erase'
+    if cmd == 'dup' && jobs.empty?
+      solver.distupgrade = true
+      solver.updatesystem = true
+      solver.allowdowngrade = true
+      solver.allowvendorchange = true
+      solver.allowarchchange = true
+      solver.dosplitprovides = true
+    elsif cmd == 'up' && jobs.length == 1 && jobs[0].how == (Solv::Job::SOLVER_UPDATE | Solv::Job::SOLVER_SOLVABLE_ALL)
+      solver.dosplitprovides = true
+    end
+    problems = solver.solve(jobs)
+    break if problems.empty?
+    for problem in problems
+      puts "Problem #{problem.id}:"
+      puts problem.findproblemrule.info.problemstr
+      solutions = problem.solutions
+      for solution in solutions
+	puts "  Solution #{solution.id}:"
+	elements = solution.elements(true)
+	for element in elements
+	  puts "  - #{element.str}"
+	end
+	puts
+      end
+      sol = nil
+      while true
+        print "Please choose a solution: "
+        STDOUT.flush
+        sol = STDIN.gets.strip
+        break if sol == 's' || sol == 'q'
+        break if sol =~ /^\d+$/ && sol.to_i >= 1 && sol.to_i <= solutions.length
+      end
+      next if sol == 's'
+      abort if sol == 'q'
+      solution = solutions[sol.to_i - 1]
+      for element in solution.elements
+        if element.type == Solv::Solver::SOLVER_SOLUTION_JOB
+          jobs[element.jobidx] = pool.Job(Solv::Job::SOLVER_NOOP, 0)
+	else
+          newjob = element.Job()
+          jobs.push(newjob) if newjob && !jobs.find {|j| j.how == newjob.how && j.what == newjob.what}
+	end
+      end
+    end
+  end
+  trans = solver.transaction
+  solver = nil
+  if trans.isempty?
+    puts "Nothing to do."
+    exit
+  end
+  puts "\nTransaction summary:\n"
+  for cl in trans.classify()
+    if cl.type == Solv::Transaction::SOLVER_TRANSACTION_ERASE
+      puts "#{cl.count} erased packages:"
+    elsif cl.type == Solv::Transaction::SOLVER_TRANSACTION_INSTALL
+      puts "#{cl.count} installed packages:"
+    elsif cl.type == Solv::Transaction::SOLVER_TRANSACTION_REINSTALLED
+      puts "#{cl.count} reinstalled packages:"
+    elsif cl.type == Solv::Transaction::SOLVER_TRANSACTION_DOWNGRADED
+      puts "#{cl.count} downgraded packages:"
+    elsif cl.type == Solv::Transaction::SOLVER_TRANSACTION_CHANGED
+      puts "#{cl.count} changed packages:"
+    elsif cl.type == Solv::Transaction::SOLVER_TRANSACTION_UPGRADED
+      puts "#{cl.count} upgraded packages:"
+    elsif cl.type == Solv::Transaction::SOLVER_TRANSACTION_VENDORCHANGE
+      puts "#{cl.count} vendor changes from '#{pool.id2str(cl.fromid)}' to '#{pool.id2str(cl.toid)}':"
+    elsif cl.type == Solv::Transaction::SOLVER_TRANSACTION_ARCHCHANGE
+      puts "#{cl.count} arch changes from '#{pool.id2str(cl.fromid)}' to '#{pool.id2str(cl.toid)}':"
+    else
+      next
+    end
+    for p in cl.solvables
+      if cl.type == Solv::Transaction::SOLVER_TRANSACTION_UPGRADED || cl.type == Solv::Transaction::SOLVER_TRANSACTION_DOWNGRADED
+	puts "  - #{p.str} -> #{trans.othersolvable(p).str}"
+      else
+	puts "  - #{p.str}"
+      end
+    end
+    puts
+  end
+  puts "install size change: #{trans.calc_installsizechange()} K\n\n"
+  while true:
+    print("OK to continue (y/n)? ")
+    STDOUT.flush
+    yn = STDIN.gets.strip
+    break if yn == 'y'
+    abort if yn == 'n'
+  end
+  newpkgs = trans.newpackages()
+  newpkgsfp = {}
+  if !newpkgs.empty?
+    downloadsize = 0
+    for p in newpkgs
+      downloadsize += p.lookup_num(Solv::SOLVABLE_DOWNLOADSIZE)
+    end
+    puts "Downloading #{newpkgs.length} packages, #{downloadsize} K"
+    for p in newpkgs
+      repo = p.repo.appdata
+      location, medianr = p.lookup_location()
+      next unless location
+      chksum = p.lookup_checksum(Solv::SOLVABLE_CHECKSUM)
+      f = repo.download_location(location, chksum)
+      newpkgsfp[p.id] = f
+      print "."
+      STDOUT.flush()
+    end
+    puts
+  end
+  puts "Committing transaction:"
+  puts
+  trans.order(0)
+  for p in trans.steps
+    steptype = trans.steptype(p, Solv::Transaction::SOLVER_TRANSACTION_RPM_ONLY)
+    if steptype == Solv::Transaction::SOLVER_TRANSACTION_ERASE
+      puts "erase #{p.str}"
+      next unless p.lookup_num(Solv::RPM_RPMDBID)
+      evr = p.evr.sub(/^[0-9]+:/, '')
+      system('rpm', '-e', '--nodeps', '--nodigest', '--nosignature', "#{p.name}-#{evr}.#{p.arch}") || abort("rpm failed: #{$? >> 8}") 
+    elsif (steptype == Solv::Transaction::SOLVER_TRANSACTION_INSTALL || steptype == Solv::Transaction::SOLVER_TRANSACTION_MULTIINSTALL)
+      puts "install #{p.str}"
+      f = newpkgsfp.delete(p.id)
+      next unless f
+      mode = steptype == Solv::Transaction::SOLVER_TRANSACTION_INSTALL ? '-U' : '-i'
+      system('rpm', mode, '--force', '--nodeps', '--nodigest', '--nosignature', "/dev/fd/#{Solv::xfileno(f).to_s}") || abort("rpm failed: #{$? >> 8}")
+      solv::xfclose(f)
+    end
+  end
+end

@@ -1,0 +1,16 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package libzypp-3.22.1-3.i586 requires libboost_filesystem.so.1.33.1, but none of the providers can be installed
+
+- allow downgrade of boost-1.34.1-3.i586 to boost-1.33.1-102.i586
+
+- do not install libzypp-3.22.1-3.i586
+- do not install zypper-0.8.19-2.i586
+- do not install yast2-ncurses-2.15.26-7.i586
+- do not install yast2-perl-bindings-2.15.3-12.i586
+- do not install yast2-pkg-bindings-2.15.49-2.i586
+- do not install yast2-qt-2.15.16-2.i586
+- do not install yast2-2.15.54-2.i586
+

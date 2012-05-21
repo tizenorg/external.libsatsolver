@@ -1,0 +1,22 @@
+>!> Installing kdelibs3-32bit from channel 3
+>!> Installing kdelibs3-arts from channel 10
+>!> Installing kdelibs3-devel-doc from channel 10
+>!> Installing kdelibs3-doc from channel 10
+>!> Installing kdelibs3-devel from channel 10
+>!> Installing kdelibs3 from channel 10
+>!> Installing k3b from channel 13
+>!> Solution #1:
+>!> upgrade k3b-0.99.1.0rc4-101.mh.2.x86_64 => k3b-0.99.1.0rc4-101.mh.3.x86_64[13]
+>!> upgrade kdelibs3-3.5.5-45.2.x86_64 => kdelibs3-3.5.6-19.1.x86_64[10]
+>!> upgrade kdelibs3-32bit-3.5.5-45.x86_64 => kdelibs3-32bit-3.5.5-45.2.x86_64[3]
+>!> upgrade kdelibs3-arts-3.5.5-45.x86_64 => kdelibs3-arts-3.5.6-19.1.x86_64[10]
+>!> upgrade kdelibs3-devel-3.5.5-45.x86_64 => kdelibs3-devel-3.5.6-19.1.x86_64[10]
+>!> upgrade kdelibs3-devel-doc-3.5.5-45.noarch => kdelibs3-devel-doc-3.5.6-20.1.noarch[10]
+>!> upgrade kdelibs3-doc-3.5.5-45.x86_64 => kdelibs3-doc-3.5.6-19.1.x86_64[10]
+>!> !unflag patch:fetchmsttfonts.sh-2333-0.noarch[3]
+>!> !unflag qscintilla-1.65-1.3.i586[10]
+>!> !unflag scim-qtimm-0.9.4-7.4.i586[10]
+>!> !unflag smartmontools-5.36-0.mh.2.x86_64[13]
+>!> !unflag xine-lib-32bit-1.1.2-40.1.x86_64[3]
+>!> !unflag xine-ui-0.99.4-84.1.x86_64[3]
+>!> installs=0, upgrades=7, uninstalls=0

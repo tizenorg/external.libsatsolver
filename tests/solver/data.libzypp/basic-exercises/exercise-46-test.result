@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+nothing provides popt-devel needed by liboaf0-devel-0.6.9-1.ximian.1.noarch
+
+  - allow deinstallation of liboaf0-devel-0.6.6-3mdk.noarch
+
+  - do not install liboaf0-0.6.9-1.ximian.1.noarch
+

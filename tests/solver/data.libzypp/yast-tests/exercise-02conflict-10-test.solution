@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package foo3-1.0-1.noarch conflicts with baz31 provided by baz3-1.0-1.noarch
+
+- allow deinstallation of foo3-1.0-1.noarch
+
+- do not install baz3-1.0-1.noarch
+

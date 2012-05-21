@@ -1,0 +1,8 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+nothing provides b <=> 1.0 needed by A-1.0-1.noarch
+
+  - do not install A-1.0-1.noarch
+

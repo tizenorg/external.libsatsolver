@@ -1,0 +1,33 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+nothing provides glibc = 2.2.4 needed by glibc-devel-6:2.2.4-9.1mdk.noarch
+
+  - do not install glibc-devel-6:2.2.4-9.1mdk.noarch
+
+Problem 2:
+====================================
+nothing provides mozilla = 0.9.8 needed by galeon-1.0.3-3.ximian.2.noarch
+
+  - do not install galeon-1.0.3-3.ximian.2.noarch
+
+Problem 3:
+====================================
+package libnss-devel-1:0.9.8-7mdk.ximian.4.noarch requires libnss3-ximian = 0.9.8, but none of the providers can be installed
+
+  - allow deinstallation of libnss-devel-1:0.9.8-7mdk.ximian.4.noarch
+
+  - do not install libnss3-3.2.1-6mdk.noarch
+
+Problem 4:
+====================================
+package mozilla-1:0.9.8-7mdk.ximian.4.noarch requires libnspr4-ximian = 0.9.8, but none of the providers can be installed
+
+  - allow downgrade of mozilla-1:0.9.8-7mdk.ximian.4.noarch to mozilla-0.9.4-4.1mdk.noarch
+  - allow deinstallation of libnspr-devel-1:0.9.8-7mdk.ximian.4.noarch
+  - allow deinstallation of mozilla-psm-1:0.9.8-7mdk.ximian.4.noarch
+  - allow downgrade of mozilla-devel-1:0.9.8-7mdk.ximian.4.noarch to mozilla-devel-0.9.4-4.1mdk.noarch
+
+  - do not install libnspr4-4.1-6mdk.noarch
+

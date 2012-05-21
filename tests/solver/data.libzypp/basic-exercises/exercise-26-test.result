@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+nothing provides libvorbis = 1.0rc3 needed by libvorbis-devel-1:1.0rc3-ximian.2.noarch
+
+  - allow deinstallation of libvorbis-devel-1.0rc2-2.noarch
+
+  - do not install xmms-1:1.2.6-ximian.3.noarch
+

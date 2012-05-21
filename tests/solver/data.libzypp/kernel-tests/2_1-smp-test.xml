@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<test>
+<setup>
+  <system file="2.1-smp-system.xml.gz"/>
+  <channel name="packages" file="2.1-smp-packages.xml.gz"/>
+  <hardwareInfo path="kernel-hardware"/>
+</setup>
+<!-- 
+(2) KMP Update
+
+    This case triggers when a KMP becomes available on an installation
+    source ("catalog") that has a higher [epoch/]version/release number
+    that the installed KMP.
+
+    (2.1) The kABI of the kernel and of the KMP match
+
+      The KMP should get updated.
+
+-->
+
+<trial>
+<install channel="packages" kind="package" name="novfs-kmp-smp" arch="i586" version="1.2.0_2.6.16_rc5_git14_3" release="8"/>
+<install channel="packages" kind="package" name="cloop-kmp-smp" arch="i586" version="2.01_2.6.16_rc5_git14_3" release="15"/>
+<install channel="packages" kind="package" name="nvidia-gfx-kmp-smp" arch="i586" version="1.0.8178_2.6.16_rc5_git14_3" release="1"/>
+  <distupgrade/>
+  <reportproblems/>
+</trial>
+
+</test>
