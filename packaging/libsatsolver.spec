@@ -6,6 +6,7 @@ Release:        1
 License:        BSD 3-clause (or similar)
 Url:            https://gitorious.org/opensuse/sat-solver
 Source:         satsolver-%{version}.tar.bz2
+Source1001: packaging/libsatsolver.manifest 
 Patch1:		satsolver-evrcmp.patch
 Patch2:		0002-Add-armv7tnhl-and-armv7thl-support.patch
 
@@ -64,6 +65,7 @@ Applications demoing the satsolver library.
 %patch2 -p1
 
 %build
+cp %{SOURCE1001} .
 export CFLAGS="$RPM_OPT_FLAGS"
 export CXXFLAGS="$CFLAGS"
 cmake   $CMAKE_FLAGS \
@@ -90,6 +92,7 @@ export NO_BRP_STRIP_DEBUG=true
 rm -rf "$RPM_BUILD_ROOT"
 
 %files -n satsolver-tools
+%manifest libsatsolver.manifest
 %defattr(-,root,root)
 %doc LICENSE*
 %exclude /usr/bin/deptestomatic
@@ -98,6 +101,7 @@ rm -rf "$RPM_BUILD_ROOT"
 /usr/bin/*
 
 %files devel
+%manifest libsatsolver.manifest
 %defattr(-,root,root)
 %_libdir/libsatsolver.a
 %_libdir/libsatsolverext.a
@@ -108,6 +112,7 @@ rm -rf "$RPM_BUILD_ROOT"
 /usr/bin/helix2solv
 
 %files demo
+%manifest libsatsolver.manifest
 %defattr(-,root,root)
 /usr/bin/solv
 
