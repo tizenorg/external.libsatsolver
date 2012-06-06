@@ -5,7 +5,7 @@ Version:        0.17.0
 Release:        1
 License:        BSD 3-clause (or similar)
 Url:            https://gitorious.org/opensuse/sat-solver
-Source:         satsolver-%{version}.tar.bz2
+Source0:        %{name}-%{version}.tar.bz2
 Source1001: packaging/libsatsolver.manifest 
 Patch1:		satsolver-evrcmp.patch
 Patch2:		0002-Add-armv7tnhl-and-armv7thl-support.patch
@@ -60,7 +60,7 @@ Applications demoing the satsolver library.
 
 
 %prep
-%setup -q -n satsolver-%{version}
+%setup -q
 %patch1 -p1
 %patch2 -p1
 
