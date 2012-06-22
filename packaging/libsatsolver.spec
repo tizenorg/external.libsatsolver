@@ -12,7 +12,6 @@ Patch2:		0002-Add-armv7tnhl-and-armv7thl-support.patch
 
 Group:          Development/Libraries/C and C++
 BuildRequires:  db4-devel
-BuildRequires: perl-devel 
 BuildRequires:  fdupes
 BuildRequires:  expat-devel
 BuildRequires:  cmake gcc-c++ rpm-devel

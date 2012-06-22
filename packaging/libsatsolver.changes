@@ -1,58 +1,14 @@
-* Sat May 21 2011 Anas Nashif <anas.nashif@intel.com> - 0.17.0
-- Update to 0.17 and remove upstreamed patches
+* Fri Jun 22 2012 Anas Nashif <anas.nashif@intel.com> 7ce3758
+- fixed package requirements
 
-* Wed Feb 02 2011 Marko Saukko <marko.saukko@cybercom.com> - 0.16.1
-- Added patch for armv7tnhl and armv7thl support. Part of fix for BMC#12620
+* Wed Jun 06 2012 Chengwei Yang <chengwei.yang@intel.com> ed56469
+- fix build for tools
 
-* Mon Jan 10 2011 Zhang Qiang <qiang.z.zhang@intel.com> - 0.16.1
-- Add 0001-Add-armv7hl-and-armv7nhl-support.patch to support two
-  new arch. fix BMC#12154
+* Wed May 30 2012 Ryan Ware <ryan.r.ware@intel.com> db1490a
+- Add default Smack manifest for libsatsolver.spec
 
-* Wed Dec 22 2010 Zhang Qiang <qiang.z.zhang@intel.com> - 0.16.1
-- Update to version 0.16.1, and remove useless patches. BMC#11604
+* Mon May 21 2012 Kim Kibum <kb0929.kim@samsung.com> b41a4c0
+- Upload Tizen:Main source
+[ Hyesook Choi ]
+- Initial empty repository
 
-* Fri Nov  5 2010 Zhang Qiang <qiang.z.zhang@intel.com> - 0.15.0
-- Add a patch to support '~' while comparing package version,
-  fix BMC#9106,9341.
-
-* Sun Jul 11 2010 Anas Nashif <anas.nashif@intel.com> - 0.15.0
-- Fixed build with new compiler/glibc
-
-* Thu Jun 24 2010 Jan-Simon Möller <jsmoeller@linuxfoundation.org> - 0.15.0
-- Add libsatsolver-0.15-ARMV7.patch, fixed upstream. BMC#3459
-
-* Thu Jun 17 2010 Anas Nashif <anas.nashif@intel.com> - 0.15.0
-- Update to version 0.15.0
-
-* Thu Mar 18 2010 Anas Nashif <anas.nashif@intel.com> - 0.14.16
-- Update to 0.14.16
-
-* Sat Mar 06 2010 Anas Nashif <anas.nashif@intel.com> - 0.14.15
-- Update to 0.14.15
-- Removed upstreamed patches
-
-* Fri Feb 19 2010 Anas Nashif <anas.nashif@intel.com> - 0.14.14
-- Applied patches from upstream:
-  + satsolver-0.14.14-parse_uservisible.patch: Fix parsing of
-    uservisible in patterns
-  + satsolver-0.14.14-set_thread_count.patch: set thread count
-    on db4 installations
-
-* Wed Feb 17 2010 Anas Nashif <anas.nashif@intel.com> - 0.14.14
-- Fixed dbenv initialization 
-- Update to 0.14.14
-
-* Tue Jan 19 2010 Peter Zhu <peter.j.zhu@intel.com> - 0.14.10
-- Update to 0.14.10
-
-* Tue Oct 06 2009 Anas Nashif <anas.nashif@intel.com> - 0.14.8
-- Require /bin/cp instead of coreutils
-
-* Mon Oct 05 2009 Anas Nashif <anas.nashif@intel.com> - 0.14.8
-- Cleanup spec file
-
-* Tue Sep 29 2009 Anas Nashif <anas.nashif@intel.com> - 0.14.8
-- Update to 0.14.8
-
-* Fri Aug 14 2009 Anas Nashif <anas.nashif@intel.com> - 0.14.4
-- Initial import into Moblin
