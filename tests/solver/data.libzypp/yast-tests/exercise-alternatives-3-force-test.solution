@@ -1,0 +1,7 @@
+>!> Installing alt-conflict from channel test
+>!> Solution #1:
+>!> remove  foo-1.0-1.noarch
+>!> install alt-conflict-1.0-1.noarch[test]
+>!> install WindowMaker-1.0-1.noarch[test]
+>!> install postfix-1.0-1.noarch[test]
+>!> installs=3, upgrades=0, uninstalls=1

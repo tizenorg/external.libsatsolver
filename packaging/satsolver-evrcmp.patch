@@ -1,0 +1,84 @@
+diff -uNr satsolver-0.15.0/src/evr.c satsolver-0.15.0.new/src/evr.c
+--- satsolver-0.15.0/src/evr.c	2010-05-07 01:09:47.000000000 +0800
++++ satsolver-0.15.0.new/src/evr.c	2010-11-05 19:49:28.237393513 +0800
+@@ -143,10 +143,21 @@
+   int r;
+   const char *s1, *s2;
+   const char *r1, *r2;
++  const char *e1, *e2;
++  char sep1, sep2;
+ 
+   if (evr1 == evr2)
+     return 0;
+ 
++  /*try to skip the package name if possible*/
++  s1 = strchr(evr1, '-') + 1;
++  s2 = strchr(evr2, '-') + 1;
++  if (s1 && s2 && (s1 - evr1) == (s2 - evr2) && strncmp (evr1, evr2, s1 - evr1) == 0)
++  {
++    evr1 = s1;
++    evr2 = s2;
++  }
++
+ #if 0
+   POOL_DEBUG(DEBUG_EVRCMP, "evrcmp %s %s mode=%d\n", evr1, evr2, mode);
+ #endif
+@@ -195,11 +206,45 @@
+ 	return -1;
+       evr2 = s2 + 1;
+     }
++ 
++  e1 = strchr(evr1, '~');
++  e2 = strchr(evr2, '~');
++  if (e1 && e2)
++  {
++    for (s1 = evr1, r1 = 0; *s1; s1++)
++      if (*s1 == '~')
++        r1 = s1;
++    for (s2 = evr2, r2 = 0; *s2; s2++)
++      if (*s2 == '~')
++        r2 = s2;
++    r = 0;
++    if (mode != EVRCMP_MATCH || (evr1 != (r1 ? r1 : s1) && evr2 != (r2 ? r2 : s2)))
++      r = vercmp(evr1, r1 ? r1 : s1, evr2, r2 ? r2 : s2);
++    if (r)
++      return r;
++    evr1 = r1 + 1;
++    evr2 = r2 + 1;
++  } 
++  
++  if (e1 && !e2)
++  {
++    sep1 = '~';
++    sep2 = '-';
++  } 
++  else if (!e1 && e2)
++  {
++    sep1 = '-';
++    sep2 = '~';
++  } 
++  else
++    sep1 = sep2 = '-';
++
++
+   for (s1 = evr1, r1 = 0; *s1; s1++)
+-    if (*s1 == '-')
++    if (*s1 == sep1)
+       r1 = s1;
+   for (s2 = evr2, r2 = 0; *s2; s2++)
+-    if (*s2 == '-')
++    if (*s2 == sep2)
+       r2 = s2;
+ 
+   r = 0;
+@@ -210,6 +255,10 @@
+ 
+   if (mode == EVRCMP_COMPARE)
+     {
++      if (!e1 && e2)
++        return 1;
++      if (e1 && !e2)
++        return -1;
+       if (!r1 && r2)
+ 	return -1;
+       if (r1 && !r2)

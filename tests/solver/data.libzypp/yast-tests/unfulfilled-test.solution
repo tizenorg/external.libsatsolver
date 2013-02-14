@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package yast2-installation-2.13.35-2.noarch requires suseRegister, but none of the providers can be installed
+
+- do not install yast2-installation-2.13.35-2.noarch
+
+- do not lock lsb-3.0-11.i586
+

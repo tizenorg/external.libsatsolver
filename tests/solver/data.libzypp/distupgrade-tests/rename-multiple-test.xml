@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+   distupgrade rename single package
+-->
+<test>
+<setup>
+  <system file="single-v1-package.xml"/>
+  <channel name="upgrade" file="multiple-rename-package.xml"/>
+</setup>
+<trial>
+  <install channel="upgrade" kind="package" name="A2" arch="noarch" version="2.0" release="1"/>
+</trial>
+</test>

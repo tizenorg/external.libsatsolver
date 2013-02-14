@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package B-1.0-2.x86_64 requires A = 1.1, but none of the providers can be installed
+
+- allow architecture change of A-1.0-1.i686 to A-1.1-2.x86_64
+
+- do not install B-1.0-2.x86_64
+

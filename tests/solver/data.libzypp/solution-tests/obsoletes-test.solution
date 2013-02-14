@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package foonew-2.0-1.noarch obsoletes foo provided by foo-2.0-1.noarch
+
+- do not install foo-2.0-1.noarch
+
+- do not install foonew-2.0-1.noarch
+
