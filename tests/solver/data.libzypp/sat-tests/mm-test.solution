@@ -1,0 +1,12 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package E-2.0-1.noarch requires foo, but none of the providers can be installed
+
+- allow deinstallation of D-1.0-1.noarch
+
+- allow deinstallation of D2-1.0-1.noarch
+
+- do not install a solvable providing E
+

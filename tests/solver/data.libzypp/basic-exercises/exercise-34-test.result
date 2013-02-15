@@ -1,0 +1,15 @@
+>!> Installing gnome-vfs from channel ximian
+>!> Solution #1:
+>!> upgrade gnome-vfs-1.0.3-ximian.5.noarch => gnome-vfs-1.0.4-ximian.4.noarch[ximian]
+>!> upgrade gnome-vfs-devel-1.0.3-ximian.5.noarch => gnome-vfs-devel-1.0.4-ximian.4.noarch[ximian]
+>!> install gnome-mime-data-1.0.3.0.200202270245-snap.ximian.1.noarch[gnome2]
+>!> installs=1, upgrades=2, uninstalls=0
+>!> Installing gnome-vfs from channel ximian
+>!> Installing libglade from channel ximian
+>!> Solution #1:
+>!> upgrade gnome-vfs-1.0.3-ximian.5.noarch => gnome-vfs-1.0.4-ximian.4.noarch[ximian]
+>!> upgrade gnome-vfs-devel-1.0.3-ximian.5.noarch => gnome-vfs-devel-1.0.4-ximian.4.noarch[ximian]
+>!> upgrade libglade-1:0.16-ximian.4.noarch => libglade-1:0.17-1.ximian.1.noarch[ximian]
+>!> upgrade libglade-devel-1:0.16-ximian.4.noarch => libglade-devel-1:0.17-1.ximian.1.noarch[ximian]
+>!> install gnome-mime-data-1.0.3.0.200202270245-snap.ximian.1.noarch[gnome2]
+>!> installs=1, upgrades=4, uninstalls=0

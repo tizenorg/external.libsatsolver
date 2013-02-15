@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package Y-1.0-1.noarch requires libcapplet.so.1 <=> 1.0, but none of the providers can be installed
+
+- allow deinstallation of A-1.0-1.noarch
+
+- do not install Y-1.0-1.noarch
+

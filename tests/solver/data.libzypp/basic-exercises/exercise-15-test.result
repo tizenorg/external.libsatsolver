@@ -1,0 +1,14 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package W-1.0-1.noarch requires a >= 2.0, but none of the providers can be installed
+
+  - allow deinstallation of A-1.0-1.noarch
+  - allow deinstallation of M-1.0-1.noarch
+  - allow deinstallation of N-1.0-1.noarch
+  - allow deinstallation of P-1.0-1.noarch
+  - allow deinstallation of O-1.0-1.noarch
+
+  - do not install W-1.0-1.noarch
+

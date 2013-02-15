@@ -1,0 +1,5 @@
+>!> Installing C from channel test
+>!> Solution #1:
+>!> remove  A-1.0-1.noarch
+>!> install C-1.0-1.noarch[test]
+>!> installs=1, upgrades=0, uninstalls=1
