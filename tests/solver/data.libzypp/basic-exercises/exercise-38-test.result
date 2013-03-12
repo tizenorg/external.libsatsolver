@@ -1,0 +1,351 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+nothing provides esound = 0.2.23.0.200202140152 needed by esound-devel-1:0.2.23.0.200202140152-snap.ximian.1.noarch
+
+  - allow deinstallation of esound-devel-1:0.2.23.0.200202140152-snap.ximian.1.noarch
+
+Problem 2:
+====================================
+nothing provides libglade = 0.17 needed by libglade-devel-1:0.17-1.noarch
+
+  - allow deinstallation of libglade-devel-1:0.17-1.noarch
+
+Problem 3:
+====================================
+nothing provides libxml = 1.8.16 needed by libxml-devel-1:1.8.16-3.noarch
+
+  - allow deinstallation of libxml-devel-1:1.8.16-3.noarch
+
+Problem 4:
+====================================
+nothing provides audiofile = 0.2.3.0.200202140152 needed by audiofile-devel-1:0.2.3.0.200202140152-snap.ximian..noarch
+
+  - allow deinstallation of audiofile-devel-1:0.2.3.0.200202140152-snap.ximian..noarch
+
+Problem 5:
+====================================
+nothing provides libgal19 = 0.19.0.1 needed by gal-devel-1:0.19.0.1-snap.ximian.200201141703.noarch
+
+  - allow deinstallation of gal-devel-1:0.19.0.1-snap.ximian.200201141703.noarch
+
+Problem 6:
+====================================
+nothing provides glib = 1.2.10 needed by glib-devel-1:1.2.10-5.noarch
+
+  - allow deinstallation of glib-devel-1:1.2.10-5.noarch
+
+Problem 7:
+====================================
+nothing provides libghttp = 1.0.9 needed by libghttp-devel-1:1.0.9-2.noarch
+
+  - allow deinstallation of libghttp-devel-1:1.0.9-2.noarch
+
+Problem 8:
+====================================
+nothing provides pygtk = 0.6.8 needed by pygtk-libglade-1:0.6.8-3.noarch
+
+  - allow downgrade of pygtk-libglade-1:0.6.8-3.noarch to pygtk-libglade-1:0.6.8-ximian.2.noarch
+
+Problem 9:
+====================================
+nothing provides pygtk = 0.6.8 needed by pygnome-1:1.4.1-3.noarch
+
+  - allow downgrade of pygnome-1:1.4.1-3.noarch to pygnome-1:1.4.1-ximian.3.noarch
+
+Problem 10:
+====================================
+nothing provides pygtk-libglade = 0.6.8 needed by pygnome-libglade-1:1.4.1-3.noarch
+
+  - allow deinstallation of pygnome-libglade-1:1.4.1-3.noarch
+
+Problem 11:
+====================================
+nothing provides libgtop = 1.0.12 needed by libgtop-devel-1:1.0.12-4.noarch
+
+  - allow deinstallation of libgtop-devel-1:1.0.12-4.noarch
+
+Problem 12:
+====================================
+nothing provides netscape-common = 4.78 needed by netscape-communicator-3:4.78-2.noarch
+
+  - allow deinstallation of netscape-communicator-3:4.78-2.noarch
+
+Problem 13:
+====================================
+nothing provides imlib = 1.9.10 needed by imlib-cfgeditor-1:1.9.10-2.noarch
+
+  - allow deinstallation of imlib-cfgeditor-1:1.9.10-2.noarch
+
+Problem 14:
+====================================
+nothing provides pspell = 0.12.2 needed by aspell-2:0.33.7-1.noarch
+
+  - allow deinstallation of aspell-2:0.33.7-1.noarch
+
+Problem 15:
+====================================
+nothing provides imlib = 1.9.10 needed by imlib-devel-1:1.9.10-2.noarch
+
+  - allow deinstallation of imlib-devel-1:1.9.10-2.noarch
+
+Problem 16:
+====================================
+nothing provides cdrecord = 1.10 needed by cdrecord-devel-7:1.10-4.noarch
+
+  - allow deinstallation of cdrecord-devel-7:1.10-4.noarch
+
+Problem 17:
+====================================
+nothing provides libpng = 1.0.12 needed by libpng-devel-2:1.0.12-2.noarch
+
+  - allow deinstallation of libpng-devel-2:1.0.12-2.noarch
+
+Problem 18:
+====================================
+nothing provides libogg = 1.0rc2 needed by libogg-devel-1:1.0rc2-1.noarch
+
+  - allow deinstallation of libogg-devel-1:1.0rc2-1.noarch
+
+Problem 19:
+====================================
+nothing provides gimp = 1.2.1 needed by gimp-devel-1:1.2.1-7.noarch
+
+  - allow deinstallation of gimp-devel-1:1.2.1-7.noarch
+
+Problem 20:
+====================================
+nothing provides mozilla = 0.9.8 needed by galeon-1.0.3-1.ximian.2.noarch
+
+  - allow deinstallation of galeon-1.0.3-1.ximian.2.noarch
+
+Problem 21:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+Problem 22:
+====================================
+nothing provides gtk+ = 1.2.10 needed by gtk+-devel-1:1.2.10-ximian.21.noarch
+
+  - allow deinstallation of gtk+-devel-1:1.2.10-ximian.21.noarch
+
+Problem 23:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-devel-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gdk-pixbuf-devel-1:0.16.0-ximian.1.noarch
+
+Problem 24:
+====================================
+nothing provides librep = 0.14 needed by librep-devel-1:0.14-ximian.2.noarch
+
+  - allow deinstallation of librep-devel-1:0.14-ximian.2.noarch
+
+Problem 25:
+====================================
+nothing provides libgnomeprint15 = 0.34 needed by gnome-print-devel-1:0.34-ximian.1.noarch
+
+  - allow deinstallation of gnome-print-devel-1:0.34-ximian.1.noarch
+
+Problem 26:
+====================================
+nothing provides xmms = 1.2.5 needed by xmms-gnome-1:1.2.5-ximian.5.noarch
+
+  - allow deinstallation of xmms-gnome-1:1.2.5-ximian.5.noarch
+
+Problem 27:
+====================================
+nothing provides gnome-libs = 1.4.1.3 needed by gnome-libs-devel-1:1.4.1.3-ximian.1.noarch
+
+  - allow deinstallation of gnome-libs-devel-1:1.4.1.3-ximian.1.noarch
+
+Problem 28:
+====================================
+nothing provides bonobo = 1.0.19 needed by bonobo-devel-1:1.0.19-ximian.2.noarch
+
+  - allow downgrade of bonobo-devel-1:1.0.19-ximian.2.noarch to bonobo-devel-1.0.7-2.noarch
+  - allow downgrade of bonobo-1:1.0.19-ximian.2.noarch to bonobo-1.0.7-2.noarch
+
+Problem 29:
+====================================
+nothing provides gnome-pim = 1.2.0 needed by gnome-pim-devel-1:1.2.0-13.noarch
+
+  - allow deinstallation of gnome-pim-devel-1:1.2.0-13.noarch
+
+Problem 30:
+====================================
+nothing provides mozilla = 0.9.8 needed by mozilla-psm-35:0.9.8-1.ximian.2.noarch
+
+  - allow deinstallation of mozilla-psm-35:0.9.8-1.ximian.2.noarch
+
+Problem 31:
+====================================
+nothing provides mozilla = 0.9.8 needed by mozilla-mail-35:0.9.8-1.ximian.2.noarch
+
+  - allow deinstallation of mozilla-mail-35:0.9.8-1.ximian.2.noarch
+
+Problem 32:
+====================================
+nothing provides ORBit = 0.5.13 needed by ORBit-devel-1:0.5.13-ximian.1.noarch
+
+  - allow deinstallation of ORBit-devel-1:0.5.13-ximian.1.noarch
+
+Problem 33:
+====================================
+nothing provides libgnomeprint15 = 0.34 needed by gnome-print-devel-1:0.34-ximian.1.noarch
+
+  - allow deinstallation of gtkhtml-devel-1.0.1.99-snap.ximian.200201141703.noarch
+
+Problem 34:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gtkhtml-1.0.1.99-snap.ximian.200201141703.noarch
+
+Problem 35:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of libgtkhtml20-1.0.1.99-snap.ximian.200201141703.noarch
+
+Problem 36:
+====================================
+nothing provides ORBit = 0.5.13 needed by ORBit-devel-1:0.5.13-ximian.1.noarch
+
+  - allow downgrade of GConf-devel-1.0.7-2.noarch to GConf-devel-1.0.7-ximian.4.noarch
+  - allow downgrade of oaf-0.6.7-ximian.2.noarch to oaf-0.6.5-10.noarch
+
+Problem 37:
+====================================
+nothing provides rep-gtk = 0.15 needed by rep-gtk-gnome-1:0.15-ximian.6.noarch
+
+  - allow deinstallation of rep-gtk-gnome-1:0.15-ximian.6.noarch
+
+Problem 38:
+====================================
+nothing provides esound = 0.2.23.0.200202140152 needed by esound-devel-1:0.2.23.0.200202140152-snap.ximian.1.noarch
+
+  - allow deinstallation of libgnome-devel-1.111.0.0.200202140152-snap.ximian.2.noarch
+
+Problem 39:
+====================================
+nothing provides esound = 0.2.23.0.200202140152 needed by esound-devel-1:0.2.23.0.200202140152-snap.ximian.1.noarch
+
+  - allow deinstallation of libbonoboui-devel-1.111.0.0.200202140152-snap.ximian.1.noarch
+
+Problem 40:
+====================================
+nothing provides gnome-libs = 1.4.1.3 needed by gnome-libs-devel-1:1.4.1.3-ximian.1.noarch
+
+  - allow downgrade of gnome-vfs-devel-1.0.4-ximian.4.noarch to gnome-vfs-devel-1.0.1-17.noarch
+  - allow downgrade of gnome-vfs-1.0.4-ximian.4.noarch to gnome-vfs-1.0.1-17.noarch
+  - allow downgrade of oaf-0.6.7-ximian.2.noarch to oaf-0.6.5-10.noarch
+
+Problem 41:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of libgal7-1:0.8-6.noarch
+
+Problem 42:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gnome-spell-0.4-ximian.1.noarch
+
+Problem 43:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of libgtkhtml19-0.16.1-ximian.1.noarch
+
+Problem 44:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of libgtkhtml18-0.15.0-ximian.2.noarch
+
+Problem 45:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gnumeric-1:1.0.4-0.ximian.1.noarch
+
+Problem 46:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of evolution-1.0.2-ximian.1.noarch
+
+Problem 47:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of Guppi-0.40.3-ximian.1.noarch
+
+Problem 48:
+====================================
+nothing provides ORBit = 0.5.13 needed by ORBit-devel-1:0.5.13-ximian.1.noarch
+
+  - allow downgrade of oaf-devel-0.6.7-ximian.2.noarch to oaf-devel-0.6.5-10.noarch
+  - allow downgrade of oaf-0.6.7-ximian.2.noarch to oaf-0.6.5-10.noarch
+
+Problem 49:
+====================================
+nothing provides pygtk-libglade = 0.6.8 needed by pygnome-libglade-1:1.4.1-3.noarch
+
+  - allow deinstallation of hwbrowser-0.3.5-2.noarch
+
+Problem 50:
+====================================
+nothing provides pygtk-libglade = 0.6.8 needed by pygnome-libglade-1:1.4.1-3.noarch
+
+  - allow deinstallation of printconf-gui-0.3.52-1.noarch
+
+Problem 51:
+====================================
+nothing provides pygtk-libglade = 0.6.8 needed by pygnome-libglade-1:1.4.1-3.noarch
+
+  - allow deinstallation of apacheconf-4:0.8.1-1.noarch
+
+Problem 52:
+====================================
+nothing provides pygtk-libglade = 0.6.8 needed by pygnome-libglade-1:1.4.1-3.noarch
+
+  - allow deinstallation of ksconfig-1.9.8-4.noarch
+
+Problem 53:
+====================================
+nothing provides pygtk-libglade = 0.6.8 needed by pygnome-libglade-1:1.4.1-3.noarch
+
+  - allow deinstallation of rhn_register-gnome-2.7.2-7.x.2.noarch
+
+Problem 54:
+====================================
+nothing provides pygtk-libglade = 0.6.8 needed by pygnome-libglade-1:1.4.1-3.noarch
+
+  - allow deinstallation of up2date-gnome-2.7.2-7.x.6.noarch
+
+Problem 55:
+====================================
+nothing provides libogg = 1.0rc2 needed by libogg-devel-1:1.0rc2-1.noarch
+
+  - allow deinstallation of libvorbis-devel-1.0rc2-2.noarch
+
+Problem 56:
+====================================
+nothing provides esound = 0.2.23.0.200202140152 needed by esound-devel-1:0.2.23.0.200202140152-snap.ximian.1.noarch
+
+  - allow deinstallation of libgnomeui-devel-1.111.1.0.200202140152-snap.ximian.1.noarch
+
+Problem 57:
+====================================
+package talk-0.17-12.noarch conflicts with ntalk provided by talk-server-0.17-12.noarch
+
+  - allow deinstallation of talk-0.17-12.noarch
+
+  - allow deinstallation of talk-server-0.17-12.noarch
+

@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package at-3.1.8-10.noarch requires mail-transport-agent, but none of the providers can be installed
+
+  - allow deinstallation of at-3.1.8-10.noarch
+
+  - do not deinstall exim-3.12-10.2.noarch
+

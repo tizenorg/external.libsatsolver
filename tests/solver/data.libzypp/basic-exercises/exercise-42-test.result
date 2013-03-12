@@ -1,0 +1,11 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package gnome-panel-libs-1.5.13.0.200203140655-snap.ximian.1.noarch requires libgconf-2.so.4, but none of the providers can be installed
+
+  - allow deinstallation of gnome-panel-libs-1.5.13.0.200203140655-snap.ximian.1.noarch
+  - allow deinstallation of gnome-desktop-libs-1.5.12.0.200203140655-snap.ximian.1.noarch
+
+  - do not install GConf2-1.1.8.0.200203150445-0.snap.ximian.1.noarch
+

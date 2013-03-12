@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package p1-1.0-1.noarch conflicts with p2 provided by p2-1.0-1.noarch
+
+- allow deinstallation of p1-1.0-1.noarch
+
+- do not install p2-1.0-1.noarch
+

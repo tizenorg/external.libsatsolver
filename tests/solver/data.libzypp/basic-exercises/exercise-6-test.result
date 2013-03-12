@@ -1,0 +1,10 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package CC-1.0-1.noarch requires a > 2.0, but none of the providers can be installed
+
+  - allow deinstallation of A-1.0-1.noarch
+
+  - do not install CC-1.0-1.noarch
+
