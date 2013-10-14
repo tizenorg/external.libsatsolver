@@ -83,6 +83,8 @@ make %{?jobs:-j %jobs}
 %endif
 
 %install
+mkdir -p %{buildroot}/usr/share/license
+cp LICENSE.BSD %{buildroot}/usr/share/license/%{name}
 make DESTDIR=$RPM_BUILD_ROOT install
 # we want to leave the .a file untouched
 export NO_BRP_STRIP_DEBUG=true
@@ -98,6 +100,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %exclude /usr/bin/helix2solv
 %exclude /usr/bin/solv
 /usr/bin/*
+/usr/share/license/%{name}
 
 %files devel
 %manifest libsatsolver.manifest
