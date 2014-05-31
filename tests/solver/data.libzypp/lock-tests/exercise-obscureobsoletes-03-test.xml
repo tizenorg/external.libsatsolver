@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<test>
+<setup>
+  <system file="exercise-obscureobsoletes-system.xml.gz"/>
+  <channel name="test" file="exercise-obscureobsoletes-packages.xml.gz"/>
+</setup>
+
+<!-- 
+# obsolete an virtual provides --> foo and foo-devel will be deleted
+no longer true, obsoletes ignore virtual provides nowadays
+ -->
+<trial>
+  <install channel="test" package="foo2old"/>
+</trial>
+
+</test>

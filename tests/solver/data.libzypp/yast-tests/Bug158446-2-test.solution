@@ -1,0 +1,7 @@
+>!> Installing kernel-default from channel update
+>!> Solution #1:
+>!> !unflag kdebase3-NLD-10.1-24.i586[packages]
+>!> !unflag kernel-default-2.6.16_rc5_git14-2.i586[system]
+>!> upgrade kernel-default-2.6.16_rc5_git14-2.i586 => kernel-default-2.6.16_rc5_git14-3.i586[update]
+>!> !unflag madwifi-kmp-default-1468_2.6.16_rc6_git1_4-4.i586[packages]
+>!> installs=0, upgrades=1, uninstalls=0

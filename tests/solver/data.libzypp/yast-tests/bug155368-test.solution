@@ -1,0 +1,29 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+package autoyast2-installation-2.13.19-2.noarch requires yast2-transfer, but none of the providers can be installed
+
+- allow deinstallation of yast2-installation-2.13.28-2.noarch
+- allow deinstallation of yast2-backup-2.13.1-2.noarch
+- allow deinstallation of autoyast2-installation-2.13.19-2.noarch
+- allow deinstallation of autoyast2-2.13.19-2.noarch
+- allow deinstallation of yast2-vm-2.13.22-2.x86_64
+- allow deinstallation of yast2-sysconfig-2.13.5-4.noarch
+- allow deinstallation of yast2-restore-2.13.1-2.noarch
+- allow deinstallation of yast2-storage-2.13.33-2.x86_64
+- allow deinstallation of yast2-packager-2.13.39-2.x86_64
+- allow deinstallation of yast2-update-2.13.3-2.x86_64
+- allow deinstallation of yast2-bootloader-2.13.18-3.x86_64
+- allow deinstallation of yast2-repair-2.13.3-4.noarch
+- allow deinstallation of yast2-inetd-2.13.2-2.noarch
+- allow deinstallation of yast2-nfs-server-2.13.2-5.noarch
+- allow deinstallation of yast2-tv-2.13.7-2.noarch
+- allow deinstallation of yast2-network-2.13.29-2.x86_64
+- allow deinstallation of yast2-powertweak-2.13.5-4.noarch
+- allow deinstallation of yast2-http-server-2.13.9-4.noarch
+- allow deinstallation of yast2-samba-server-2.13.6-2.noarch
+- allow deinstallation of yast2-nis-server-2.13.1-5.noarch
+
+- do not deinstall yast2-transfer-2.13.3-2.x86_64
+

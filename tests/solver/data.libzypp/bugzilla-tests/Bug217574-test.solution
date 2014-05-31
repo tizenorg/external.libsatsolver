@@ -1,0 +1,26 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+nothing provides powersave needed by smartmontools-5.36.cvs20061025-15.i586
+
+- do not install smartmontools-5.36.cvs20061025-15.i586
+
+Problem 2:
+====================================
+conflicting requests
+
+- do not deinstall yast2-storage-debuginfo
+- do not install yast2-storage-2.15.5-4.i586
+- do not install yast2-storage-evms-2.15.5-4.i586
+
+- do not keep yast2-storage-debuginfo-2.15.4-2.i586 installed
+
+Problem 3:
+====================================
+package product:openSUSE-DVD9-retail-10.2.i686 requires openSUSE-release = 10.2, but none of the providers can be installed
+
+- allow deinstallation of product:openSUSE-DVD9-retail-10.2.i686
+
+- do not install openSUSE-release-10.3-9.i586
+

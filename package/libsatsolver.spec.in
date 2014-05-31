@@ -1,0 +1,172 @@
+Name:           libsatsolver
+Version:        @VERSION@
+Release:        1
+License:        BSD 3-Clause
+Url:            git://gitorious.org/opensuse/sat-solver.git
+Source:         satsolver-%{version}.tar.bz2
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Group:          Development/Libraries/C and C++
+Prefix:         /usr
+
+BuildRequires:  doxygen
+%if 0%{?mandriva_version}
+# force this version on mandriva
+BuildRequires:  libneon0.26-devel
+%endif
+%if 0%{?fedora_version}
+BuildRequires:  db4-devel ruby ruby-rdoc
+%endif
+%if 0%{?suse_version}
+%if 0%{?suse_version} < 1030
+BuildRequires:  expat
+%else
+BuildRequires:  libexpat-devel
+%endif
+%if 0%{?suse_version} < 1100
+BuildRequires:  graphviz
+%endif
+%if 0%{?suse_version} > 1020
+BuildRequires:  fdupes
+%endif
+%else
+BuildRequires:  expat-devel
+%endif
+BuildRequires:  cmake rpm-devel gcc-c++
+BuildRequires:  zlib-devel
+# the testsuite uses the check framework
+%if 0%{?suse_version} >= 1030 || !0%{?suse_version}
+BuildRequires:  check-devel
+%else
+BuildRequires:  check
+%endif
+Summary:        A new approach to package dependency solving
+
+
+%description
+A new approach to package dependency solving
+
+Authors:
+--------
+    Michael Schroeder <mls@suse.de>
+    Klaus Kaempf <kkaempf@suse.de>
+    Stephan Kulow <coolo@suse.de>
+    Michael Matz <matz@suse.de>
+    Duncan Mac-Vicar P. <dmacvicar@suse.de>
+
+%package devel
+Summary:        A new approach to package dependency solving
+Group:          Development/Libraries/C and C++
+Requires:       satsolver-tools = %version
+Requires:       rpm-devel
+
+#%package devel-doc
+#Summary:        satsolver developer documentation
+#Group:          Documentation/HTML
+
+%description devel
+Development files for satsolver, a new approach to package dependency solving
+
+#%description devel-doc
+#Developer documentation for satsolver, a new approach to package dependency solving
+
+
+Authors:
+--------
+    Michael Schroeder <mls@suse.de>
+    Klaus Kaempf <kkaempf@suse.de>
+    Stephan Kulow <coolo@suse.de>
+    Michael Matz <matz@suse.de>
+    Duncan Mac-Vicar P. <dmacvicar@suse.de>
+
+%package -n satsolver-tools
+Summary:        A new approach to package dependency solving
+Group:          Development/Libraries/C and C++
+Obsoletes:      libsatsolver <= 0.0.15
+Provides:       libsatsolver = %{version}-%{release}
+Requires:       gzip bzip2 coreutils
+
+%description -n satsolver-tools
+A new approach to package dependency solving.
+
+%package demo
+Summary:        Applications demoing the satsolver library
+Group:          System/Management
+Requires:       curl
+%if 0%{?fedora_version}
+Requires:       gnupg2
+%endif
+%if 0%{?suse_version}
+Requires:       gpg2
+%endif
+
+%description demo
+Applications demoing the satsolver library.
+
+%prep
+%setup -n satsolver-%{version}
+
+%build
+export CFLAGS="$RPM_OPT_FLAGS"
+export CXXFLAGS="$CFLAGS"
+
+CMAKE_FLAGS=
+%if 0%{?fedora_version}
+CMAKE_FLAGS="-DFEDORA=1"
+%endif
+# Where does RHEL provide qsort_r ?
+%if 0%{?rhel_version} > 0 || 0%{?centos_version} > 0
+export CFLAGS="$RPM_OPT_FLAGS -DUSE_OWN_QSORT=1"
+%endif
+
+cmake   $CMAKE_FLAGS \
+	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
+	-DLIB=%{_lib} \
+	-DCMAKE_VERBOSE_MAKEFILE=TRUE \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_SKIP_RPATH=1 
+make %{?jobs:-j %jobs}
+make doc_forced
+
+%if 0%{?run_testsuite}
+  ln -s . build
+  ctest .
+%endif
+
+%install
+make DESTDIR=$RPM_BUILD_ROOT install
+# we want to leave the .a file untouched
+export NO_BRP_STRIP_DEBUG=true
+#pushd doc/autodoc
+#make install
+#popd
+
+%clean
+rm -rf "$RPM_BUILD_ROOT"
+
+%files -n satsolver-tools
+%defattr(-,root,root)
+%doc LICENSE*
+%exclude /usr/bin/deptestomatic
+%exclude /usr/bin/helix2solv
+%exclude /usr/bin/solv
+/usr/bin/*
+
+%files devel
+%defattr(-,root,root)
+%_libdir/libsatsolver.a
+%_libdir/libsatsolverext.a
+%dir /usr/include/satsolver
+/usr/include/satsolver/*
+/usr/bin/deptestomatic
+/usr/bin/helix2solv
+
+%files demo
+%defattr(-,root,root)
+/usr/bin/solv
+
+#%files devel-doc
+#%defattr(-,root,root)
+#%dir %_docdir/satsolver
+#%_docdir/satsolver/*
+
+%changelog

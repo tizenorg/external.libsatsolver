@@ -1,0 +1,604 @@
+Encountered problems! Here are the solutions:
+
+Problem 1:
+====================================
+nothing provides esound = 0.2.23 needed by esound-devel-1:0.2.23-ximian.3.noarch
+
+  - allow deinstallation of esound-devel-1:0.2.23-ximian.3.noarch
+
+Problem 2:
+====================================
+nothing provides libglade = 0.17 needed by libglade-devel-1:0.17-1.ximian.1.noarch
+
+  - allow deinstallation of libglade-devel-1:0.17-1.ximian.1.noarch
+
+Problem 3:
+====================================
+nothing provides mozilla = 0.9.8 needed by mozilla-mail-35:0.9.8-1.ximian.4.noarch
+
+  - allow deinstallation of mozilla-mail-35:0.9.8-1.ximian.4.noarch
+
+Problem 4:
+====================================
+nothing provides gtk+ = 1.2.10 needed by gtk+-devel-1:1.2.10-ximian.21.noarch
+
+  - allow deinstallation of gtk+-devel-1:1.2.10-ximian.21.noarch
+
+Problem 5:
+====================================
+nothing provides gnome-pim = 1.4.0 needed by gnome-pim-conduits-1:1.4.0-ximian.7.noarch
+
+  - allow deinstallation of gnome-pim-conduits-1:1.4.0-ximian.7.noarch
+
+Problem 6:
+====================================
+nothing provides rep-gtk = 0.15 needed by rep-gtk-gnome-1:0.15-ximian.7.noarch
+
+  - allow deinstallation of rep-gtk-gnome-1:0.15-ximian.7.noarch
+
+Problem 7:
+====================================
+nothing provides gimp = 1.2.3 needed by gimp-perl-1:1.2.3-1.ximian.2.noarch
+
+  - allow deinstallation of gimp-perl-1:1.2.3-1.ximian.2.noarch
+
+Problem 8:
+====================================
+nothing provides cdrecord = 1.10 needed by cdrecord-devel-7:1.10-4.noarch
+
+  - allow deinstallation of cdrecord-devel-7:1.10-4.noarch
+
+Problem 9:
+====================================
+nothing provides libvorbis = 1.0rc3 needed by libvorbis-devel-1:1.0rc3-ximian.2.noarch
+
+  - allow deinstallation of libvorbis-devel-1:1.0rc3-ximian.2.noarch
+
+Problem 10:
+====================================
+nothing provides libghttp = 1.0.9 needed by libghttp-devel-1:1.0.9-ximian.8.noarch
+
+  - allow deinstallation of libghttp-devel-1:1.0.9-ximian.8.noarch
+
+Problem 11:
+====================================
+nothing provides libpanel-applet0 = 1.4.0.6 needed by gnome-core-1:1.4.0.6-1.ximian.2.noarch
+
+  - allow deinstallation of gnome-core-1:1.4.0.6-1.ximian.2.noarch
+
+Problem 12:
+====================================
+nothing provides glib = 1.2.10 needed by glib-devel-1:1.2.10-ximian.5.noarch
+
+  - allow deinstallation of glib-devel-1:1.2.10-ximian.5.noarch
+
+Problem 13:
+====================================
+nothing provides libsigc++ = 1.0.4 needed by libsigc++-devel-1:1.0.4-1.ximian.1.noarch
+
+  - allow deinstallation of libsigc++-devel-1:1.0.4-1.ximian.1.noarch
+
+Problem 14:
+====================================
+nothing provides mozilla = 0.9.8 needed by mozilla-xmlterm-35:0.9.8-1.ximian.4.noarch
+
+  - allow deinstallation of mozilla-xmlterm-35:0.9.8-1.ximian.4.noarch
+
+Problem 15:
+====================================
+nothing provides imlib = 1.9.13 needed by imlib-devel-1:1.9.13-2.7.x.ximian.2.noarch
+
+  - allow deinstallation of imlib-devel-1:1.9.13-2.7.x.ximian.2.noarch
+
+Problem 16:
+====================================
+nothing provides libxml = 1.8.17 needed by libxml-devel-1:1.8.17-1.ximian.1.noarch
+
+  - allow deinstallation of libxml-devel-1:1.8.17-1.ximian.1.noarch
+
+Problem 17:
+====================================
+nothing provides mozilla = 0.9.8 needed by mozilla-devel-35:0.9.8-1.ximian.4.noarch
+
+  - allow deinstallation of mozilla-devel-35:0.9.8-1.ximian.4.noarch
+
+Problem 18:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-applet-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of pygnome-applet-1:1.4.1-ximian.3.noarch
+
+Problem 19:
+====================================
+nothing provides imlib = 1.9.13 needed by imlib-cfgeditor-1:1.9.13-2.7.x.ximian.2.noarch
+
+  - allow deinstallation of imlib-cfgeditor-1:1.9.13-2.7.x.ximian.2.noarch
+
+Problem 20:
+====================================
+nothing provides pilot-link = 0.9.5 needed by pilot-link-devel-1:0.9.5-ximian.2.noarch
+
+  - allow deinstallation of pilot-link-devel-1:0.9.5-ximian.2.noarch
+
+Problem 21:
+====================================
+nothing provides libogg = 1.0rc3 needed by libogg-devel-1:1.0rc3-ximian.3.noarch
+
+  - allow deinstallation of libogg-devel-1:1.0rc3-ximian.3.noarch
+
+Problem 22:
+====================================
+nothing provides libpanel-applet0 = 1.4.0.6 needed by gnome-core-devel-1:1.4.0.6-1.ximian.2.noarch
+
+  - allow deinstallation of gnome-core-devel-1:1.4.0.6-1.ximian.2.noarch
+
+Problem 23:
+====================================
+nothing provides mozilla = 0.9.8 needed by galeon-1.0.3-1.ximian.2.noarch
+
+  - allow deinstallation of galeon-1.0.3-1.ximian.2.noarch
+
+Problem 24:
+====================================
+nothing provides rep-gtk = 0.15 needed by rep-gtk-libglade-1:0.15-ximian.7.noarch
+
+  - allow deinstallation of rep-gtk-libglade-1:0.15-ximian.7.noarch
+
+Problem 25:
+====================================
+nothing provides audiofile = 0.2.1 needed by audiofile-devel-1:0.2.1-ximian.4.noarch
+
+  - allow deinstallation of audiofile-devel-1:0.2.1-ximian.4.noarch
+
+Problem 26:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-libglade-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of pygnome-libglade-1:1.4.1-ximian.3.noarch
+
+Problem 27:
+====================================
+nothing provides libgal19 = 0.19.1 needed by gal-devel-1:0.19.1-1.ximian.1.noarch
+
+  - allow deinstallation of gal-devel-1:0.19.1-1.ximian.1.noarch
+
+Problem 28:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-devel-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gdk-pixbuf-devel-1:0.16.0-ximian.1.noarch
+
+Problem 29:
+====================================
+nothing provides gnome-games = 1.4.0.1 needed by gnome-games-devel-1:1.4.0.1-ximian.14.noarch
+
+  - allow deinstallation of gnome-games-devel-1:1.4.0.1-ximian.14.noarch
+
+Problem 30:
+====================================
+nothing provides guile = 1.3.4 needed by guile-devel-3:1.3.4-16.noarch
+
+  - allow deinstallation of guile-devel-3:1.3.4-16.noarch
+
+Problem 31:
+====================================
+nothing provides rep-gtk-libglade = 0.15 needed by sawfish-themer-1:1.0-ximian.4.noarch
+
+  - allow deinstallation of sawfish-themer-1:1.0-ximian.4.noarch
+
+Problem 32:
+====================================
+nothing provides pspell = 0.12.2 needed by aspell-2:0.33.7-1.noarch
+
+  - allow deinstallation of aspell-2:0.33.7-1.noarch
+
+Problem 33:
+====================================
+nothing provides xmms = 1.2.6 needed by xmms-devel-1:1.2.6-ximian.3.noarch
+
+  - allow deinstallation of xmms-devel-1:1.2.6-ximian.3.noarch
+
+Problem 34:
+====================================
+nothing provides ORBit = 0.5.13 needed by ORBit-devel-1:0.5.13-ximian.1.noarch
+
+  - allow deinstallation of ORBit-devel-1:0.5.13-ximian.1.noarch
+
+Problem 35:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-capplet-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of pygnome-capplet-1:1.4.1-ximian.3.noarch
+
+Problem 36:
+====================================
+nothing provides gimp = 1.2.3 needed by gimp-devel-1:1.2.3-1.ximian.2.noarch
+
+  - allow deinstallation of gimp-devel-1:1.2.3-1.ximian.2.noarch
+
+Problem 37:
+====================================
+nothing provides gnome-pim = 1.4.0 needed by gnome-pim-devel-1:1.4.0-ximian.5.noarch
+
+  - allow deinstallation of gnome-pim-devel-1:1.4.0-ximian.5.noarch
+
+Problem 38:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+Problem 39:
+====================================
+nothing provides gnome-libs = 1.4.1.4 needed by gnome-libs-devel-1:1.4.1.4-1.ximian.3.noarch
+
+  - allow deinstallation of gnome-libs-devel-1:1.4.1.4-1.ximian.3.noarch
+
+Problem 40:
+====================================
+nothing provides gaim = 0.52 needed by gaim-applet-1:0.52-1.ximian.2.noarch
+
+  - allow deinstallation of gaim-applet-1:0.52-1.ximian.2.noarch
+
+Problem 41:
+====================================
+nothing provides bonobo = 1.0.19 needed by bonobo-devel-1:1.0.19-ximian.2.noarch
+
+  - allow deinstallation of bonobo-devel-1:1.0.19-ximian.2.noarch
+
+Problem 42:
+====================================
+nothing provides netscape-common = 4.78 needed by netscape-communicator-3:4.78-2.noarch
+
+  - allow deinstallation of netscape-communicator-3:4.78-2.noarch
+
+Problem 43:
+====================================
+nothing provides xmms = 1.2.6 needed by xmms-gnome-1:1.2.6-ximian.3.noarch
+
+  - allow deinstallation of xmms-gnome-1:1.2.6-ximian.3.noarch
+
+Problem 44:
+====================================
+nothing provides mozilla = 0.9.8 needed by mozilla-psm-35:0.9.8-1.ximian.4.noarch
+
+  - allow deinstallation of mozilla-psm-35:0.9.8-1.ximian.4.noarch
+
+Problem 45:
+====================================
+nothing provides librep = 0.15.2 needed by librep-devel-1:0.15.2-1.ximian.1.noarch
+
+  - allow deinstallation of librep-devel-1:0.15.2-1.ximian.1.noarch
+
+Problem 46:
+====================================
+nothing provides mozilla = 0.9.8 needed by mozilla-chat-35:0.9.8-1.ximian.4.noarch
+
+  - allow deinstallation of mozilla-chat-35:0.9.8-1.ximian.4.noarch
+
+Problem 47:
+====================================
+nothing provides libpng = 1.0.12 needed by libpng-devel-2:1.0.12-2.noarch
+
+  - allow deinstallation of libpng-devel-2:1.0.12-2.noarch
+
+Problem 48:
+====================================
+nothing provides libgtop = 1.0.12 needed by libgtop-devel-1:1.0.12-ximian.3.noarch
+
+  - allow deinstallation of libgtop-devel-1:1.0.12-ximian.3.noarch
+
+Problem 49:
+====================================
+nothing provides libgnomeprint15 = 0.35 needed by gnome-print-devel-1:0.35-1.ximian.1.noarch
+
+  - allow deinstallation of gnome-print-devel-1:0.35-1.ximian.1.noarch
+
+Problem 50:
+====================================
+nothing provides control-center = 1.5.12 needed by control-center-devel-1:1.5.12-ximian.2.noarch
+
+  - allow deinstallation of control-center-devel-1:1.5.12-ximian.2.noarch
+
+Problem 51:
+====================================
+nothing provides libgnomeprint15 = 0.35 needed by gnome-print-devel-1:0.35-1.ximian.1.noarch
+
+  - allow deinstallation of gtkhtml-devel-1.0.2-ximian.1.noarch
+
+Problem 52:
+====================================
+nothing provides bonobo = 1.0.19 needed by bonobo-devel-1:1.0.19-ximian.2.noarch
+
+  - allow deinstallation of nautilus-devel-1.0.6-ximian.4.noarch
+
+Problem 53:
+====================================
+nothing provides gnome-libs = 1.4.1.4 needed by gnome-libs-devel-1:1.4.1.4-1.ximian.3.noarch
+
+  - allow deinstallation of gnome-guile-devel-0.20-ximian.3.noarch
+
+Problem 54:
+====================================
+nothing provides gnome-libs = 1.4.1.4 needed by gnome-libs-devel-1:1.4.1.4-1.ximian.3.noarch
+
+  - allow deinstallation of gnomemm-devel-1.2.2-1.ximian.1.noarch
+
+Problem 55:
+====================================
+nothing provides gnome-libs = 1.4.1.4 needed by gnome-libs-devel-1:1.4.1.4-1.ximian.3.noarch
+
+  - allow deinstallation of gnome-vfs-devel-1.0.4-ximian.4.noarch
+
+Problem 56:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of evolution-1.0.3-ximian.4.noarch
+
+Problem 57:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of mrproject-0.5.1-for.ximian.1.noarch
+
+Problem 58:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of ximian-doorman-1:1.0.8-ximian.4.noarch
+
+Problem 59:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of nautilus-1.0.6-ximian.4.noarch
+
+Problem 60:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gnucash-1.6.5-ximian.2.noarch
+
+Problem 61:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of sodipodi-0.24.1-ximian.1.noarch
+
+Problem 62:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of bug-buddy-1:2.0.8-ximian.1.noarch
+
+Problem 63:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gtkhtml-1.0.2-ximian.1.noarch
+
+Problem 64:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gnome-applets-1:1.4.0.1-ximian.6.noarch
+
+Problem 65:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of abiword-1:0.99.3-1.ximian.1.noarch
+
+Problem 66:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of monkeytalk-1.0.4-1.ximian.1.noarch
+
+Problem 67:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gnome-spell-0.4-ximian.2.noarch
+
+Problem 68:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of libgtkhtml20-1.0.2-ximian.1.noarch
+
+Problem 69:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of libgtkhtml19-0.16.1-ximian.1.noarch
+
+Problem 70:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of libgtkhtml18-0.15.0-ximian.2.noarch
+
+Problem 71:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of eog-1:0.6-ximian.8.noarch
+
+Problem 72:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of Guppi-0.40.3-ximian.1.noarch
+
+Problem 73:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of libgal7-1:0.8-6.noarch
+
+Problem 74:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of ximian-connector-1.0.0-1.ximian.4.noarch
+
+Problem 75:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gnumeric-1:1.0.4-0.ximian.1.noarch
+
+Problem 76:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of control-center-1:1.5.12-ximian.2.noarch
+
+Problem 77:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of gnome-utils-1:1.4.1.2-1.ximian.1.noarch
+
+Problem 78:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of nautilus-mozilla-1.0.6-ximian.4.noarch
+
+Problem 79:
+====================================
+nothing provides ORBit = 0.5.13 needed by ORBit-devel-1:0.5.13-ximian.1.noarch
+
+  - allow deinstallation of oaf-devel-0.6.8-1.ximian.1.noarch
+
+Problem 80:
+====================================
+nothing provides guile = 1.3.4 needed by guile-devel-3:1.3.4-16.noarch
+
+  - allow deinstallation of gnucash-devel-1.6.5-ximian.2.noarch
+
+Problem 81:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-libglade-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of hwbrowser-0.3.5-2.noarch
+
+Problem 82:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-libglade-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of apacheconf-4:0.8.1-1.noarch
+
+Problem 83:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-libglade-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of up2date-gnome-2.7.46-7.x.2.noarch
+
+Problem 84:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-libglade-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of printconf-gui-0.3.61-3.noarch
+
+Problem 85:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-libglade-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of ksconfig-1.9.8-4.noarch
+
+Problem 86:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-libglade-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of redhat-config-network-0.9.10-2.noarch
+
+Problem 87:
+====================================
+nothing provides pygnome = 1.4.1 needed by pygnome-libglade-1:1.4.1-ximian.3.noarch
+
+  - allow deinstallation of rhn_register-gnome-2.7.9-7.x.2.noarch
+
+Problem 88:
+====================================
+nothing provides pilot-link = 0.9.5 needed by pilot-link-devel-1:0.9.5-ximian.2.noarch
+
+  - allow deinstallation of gnome-pilot-devel-0.1.64-ximian.1.noarch
+
+Problem 89:
+====================================
+nothing provides libxml = 1.8.17 needed by libxml-devel-1:1.8.17-1.ximian.1.noarch
+
+  - allow deinstallation of soup-devel-0.7.0-1.ximian.3.noarch
+
+Problem 90:
+====================================
+nothing provides libsigc++ = 1.0.4 needed by libsigc++-devel-1:1.0.4-1.ximian.1.noarch
+
+  - allow deinstallation of gtkmm-devel-1.2.8-1.ximian.1.noarch
+
+Problem 91:
+====================================
+nothing provides libpanel-applet0 = 1.4.0.6 needed by gnome-core-1:1.4.0.6-1.ximian.2.noarch
+
+  - allow deinstallation of battstat_applet-2.0.9-ximian.7.noarch
+
+Problem 92:
+====================================
+nothing provides libpanel-applet0 = 1.4.0.6 needed by gnome-core-1:1.4.0.6-1.ximian.2.noarch
+
+  - allow deinstallation of gnome-lokkit-0.50-6.noarch
+
+Problem 93:
+====================================
+nothing provides libpanel-applet0 = 1.4.0.6 needed by gnome-core-1:1.4.0.6-1.ximian.2.noarch
+
+  - allow deinstallation of Gtk-Perl-0.7008-ximian.1.noarch
+
+Problem 94:
+====================================
+nothing provides rep-gtk = 0.15 needed by rep-gtk-gnome-1:0.15-ximian.7.noarch
+
+  - allow deinstallation of sawfish-1:1.0-ximian.4.noarch
+
+Problem 95:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of control-center-plus-1.5.11-ximian.1.noarch
+
+Problem 96:
+====================================
+package talk-server-0.17-12.noarch conflicts with ntalk provided by talk-0.17-12.noarch
+
+  - allow deinstallation of talk-0.17-12.noarch
+
+  - allow deinstallation of talk-server-0.17-12.noarch
+
+Problem 97:
+====================================
+nothing provides rep-gtk = 0.15 needed by rep-gtk-gnome-1:0.15-ximian.7.noarch
+
+  - allow deinstallation of sawfish-themes-0.2-ximian.1.noarch
+
+Problem 98:
+====================================
+nothing provides ORBit = 0.5.13 needed by ORBit-devel-1:0.5.13-ximian.1.noarch
+
+  - allow deinstallation of GConf-devel-1.0.8-1.ximian.1.noarch
+
+Problem 99:
+====================================
+nothing provides gnome-libs = 1.4.1.4 needed by gnome-libs-devel-1:1.4.1.4-1.ximian.3.noarch
+
+  - allow deinstallation of panelmm-devel-0.1-ximian.3.noarch
+
+Problem 100:
+====================================
+nothing provides gdk-pixbuf = 0.16.0 needed by gdk-pixbuf-gnome-1:0.16.0-ximian.1.noarch
+
+  - allow deinstallation of Guppi-devel-0.40.3-ximian.1.noarch
+
