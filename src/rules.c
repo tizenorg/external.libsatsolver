@@ -568,6 +568,7 @@ solver_addrpmrulesforsolvable(Solver *solv, Solvable *s, Map *m)
 		  if (!p)
 		    {
 		      POOL_DEBUG(SAT_DEBUG_RULE_CREATION, "ignoring broken requires %s of installed package %s\n", dep2str(pool, req), solvable2str(pool, s));
+		      fprintf(stderr, "ignoring broken requires %s of installed package %s\n", dep2str(pool, req), solvable2str(pool, s));
 		      continue;
 		    }
 		}
@@ -576,6 +577,8 @@ solver_addrpmrulesforsolvable(Solver *solv, Solvable *s, Map *m)
 		{
 		  /* nothing provides req! */
 		  POOL_DEBUG(SAT_DEBUG_RULE_CREATION, "package %s [%d] is not installable (%s)\n", solvable2str(pool, s), (Id)(s - pool->solvables), dep2str(pool, req));
+		  fprintf(stderr, "package %s [%d] is not installable (missing dependency : %s)\n", solvable2str(pool, s), (Id)(s - pool->solvables), dep2str(pool, req));
+
 		  addrpmrule(solv, -n, 0, SOLVER_RULE_RPM_NOTHING_PROVIDES_DEP, req);
 		  continue;
 		}

@@ -2,16 +2,16 @@
 
 Name:           libsatsolver
 Version:        0.17.0
-Release:        1
+Release:        2
 License:        BSD 3-clause (or similar)
 Url:            https://gitorious.org/opensuse/sat-solver
-Source0:        %{name}-%{version}.tar.bz2
-Source1001: packaging/libsatsolver.manifest 
+Source:         satsolver-%{version}.tar.bz2
 Patch1:		satsolver-evrcmp.patch
 Patch2:		0002-Add-armv7tnhl-and-armv7thl-support.patch
 
 Group:          Development/Libraries/C and C++
 BuildRequires:  db4-devel
+BuildRequires: perl-devel 
 BuildRequires:  fdupes
 BuildRequires:  expat-devel
 BuildRequires:  cmake gcc-c++ rpm-devel
@@ -59,12 +59,11 @@ Applications demoing the satsolver library.
 
 
 %prep
-%setup -q
+%setup -q -n satsolver-%{version}
 %patch1 -p1
 %patch2 -p1
 
 %build
-cp %{SOURCE1001} .
 export CFLAGS="$RPM_OPT_FLAGS"
 export CXXFLAGS="$CFLAGS"
 cmake   $CMAKE_FLAGS \
@@ -91,7 +90,6 @@ export NO_BRP_STRIP_DEBUG=true
 rm -rf "$RPM_BUILD_ROOT"
 
 %files -n satsolver-tools
-%manifest libsatsolver.manifest
 %defattr(-,root,root)
 %doc LICENSE*
 %exclude /usr/bin/deptestomatic
@@ -100,7 +98,6 @@ rm -rf "$RPM_BUILD_ROOT"
 /usr/bin/*
 
 %files devel
-%manifest libsatsolver.manifest
 %defattr(-,root,root)
 %_libdir/libsatsolver.a
 %_libdir/libsatsolverext.a
@@ -111,7 +108,6 @@ rm -rf "$RPM_BUILD_ROOT"
 /usr/bin/helix2solv
 
 %files demo
-%manifest libsatsolver.manifest
 %defattr(-,root,root)
 /usr/bin/solv
 
