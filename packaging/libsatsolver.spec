@@ -11,7 +11,7 @@ Patch2:		0002-Add-armv7tnhl-and-armv7thl-support.patch
 
 Group:          Development/Libraries/C and C++
 BuildRequires:  db4-devel
-BuildRequires: perl-devel 
+BuildRequires: perl
 BuildRequires:  fdupes
 BuildRequires:  expat-devel
 BuildRequires:  cmake gcc-c++ rpm-devel
@@ -64,7 +64,7 @@ Applications demoing the satsolver library.
 %patch2 -p1
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS"
+export CFLAGS="$RPM_OPT_FLAGS -Wno-error"
 export CXXFLAGS="$CFLAGS"
 cmake   $CMAKE_FLAGS \
 	-DCMAKE_INSTALL_PREFIX=/usr \
